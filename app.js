@@ -25,18 +25,18 @@ app.get('/', (req, res) => {
   res.render('landing');
 });
 
-app.get('/motors', (req, res) => {
+app.get('/motocycles', (req, res) => {
   // Get all the motos from DB -> .find({looking for everything})
   Motocycle.find({}, (err, allMotocycles) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('motors', { motocycles: allMotocycles });
+      res.render('motocycles', { motocycles: allMotocycles });
     }
   });
 });
 
-app.post('/motors', (req, res) => {
+app.post('/motocycles', (req, res) => {
   //res.send('Post route');
   //get data from form and add to array
   var brand = req.body.brand;
@@ -51,11 +51,11 @@ app.post('/motors', (req, res) => {
     if (err) {
       console.log(err);
     }
-    res.redirect('/motors');
+    res.redirect('/motocycles');
   });
 });
 
-app.get('/motors/new', (req, res) => {
+app.get('/motocycles/new', (req, res) => {
   res.render('new.ejs');
 });
 
