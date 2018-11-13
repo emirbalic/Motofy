@@ -1,10 +1,24 @@
-<h1>This is the motors page!</h1>
+<% include partials/header %>
 
-<a href="motors/new">Add New Moto</a>
+<header class="jumbotron">
+  <div class="container">
+    <h1>This is the motors page!</h1>
+    <p>Take a look at the best looking bikes in the world</p>
+    <p>
+      <a class="btn btn-primary btn-large" href="motors/new">Add New Moto</a>
+    </p>
+  </div>
+</header>
 
-<% motors.forEach(motor => { %>
-<div>
-  <h4><%=motor.name%></h4>
-  <img src="<%=motor.image%>" alt="photo" />
+<div class="row text-center" style="display:flex; flex-wrap:wrap">
+  <% motors.forEach(motor => { %>
+  <div class="col-md-3 col-sm-6">
+    <div class="thumbnail">
+      <div class="caption"><h4><%=motor.name%></h4></div>
+      <img src="<%=motor.image%>" alt="photo" />
+    </div>
+  </div>
+  <% }); %>
 </div>
-<% }); %>
+
+<% include partials/footer %>
