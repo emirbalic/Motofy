@@ -1,0 +1,13 @@
+<% include partials/header %>
+
+<h1>Create new moto</h1>
+
+<form action="/motors" method="POST">
+  <input type="text" name="name" placeholder="name" />
+  <input type="text" name="image" placeholder="Image Url" />
+  <button type="submit">Submit</button>
+</form>
+
+<a href="/motors">Back</a>
+
+<% include partials/footer %>
