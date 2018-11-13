@@ -12,11 +12,14 @@
 </header>
 
 <div class="row text-center" style="display:flex; flex-wrap:wrap">
-  <% motors.forEach(motor => { %>
+  <% motocycles.forEach(motocycle => { %>
   <div class="col-md-3 col-sm-6">
     <div class="thumbnail">
-      <div class="caption"><h4><%=motor.name%></h4></div>
-      <img src="<%=motor.image%>" alt="photo" />
+      <div class="caption">
+        <h4><%=motocycle.name%></h4>
+        <h5><em><%=motocycle.brand%></em></h5>
+      </div>
+      <img src="<%=motocycle.image%>" alt="photo" />
     </div>
   </div>
   <% }); %>
