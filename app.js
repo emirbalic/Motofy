@@ -1,7 +1,8 @@
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
-  mongoose = require('mongoose');
+  mongoose = require('mongoose'),
+  Motocycle = require('./models/motocycle');
 
 //   mongodb://<dbuser>:<dbpassword>@ds161653.mlab.com:61653/motofy
 mongoose.connect(
@@ -11,16 +12,6 @@ mongoose.connect(
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
-
-//Schema setup
-var motocycleSchema = new mongoose.Schema({
-  name: String,
-  brand: String,
-  image: String,
-  description: String
-});
-
-var Motocycle = mongoose.model('Motocycle', motocycleSchema);
 
 app.get('/', (req, res) => {
   res.render('landing');
