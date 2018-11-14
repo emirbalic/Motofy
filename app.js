@@ -2,8 +2,8 @@ var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
-  Motocycle = require('./models/motocycle');
-Comment = require('./models/comment');
+  Motocycle = require('./models/motocycle'),
+  Comment = require('./models/comment');
 
 //   mongodb://<dbuser>:<dbpassword>@ds161653.mlab.com:61653/motofy
 mongoose.connect(
@@ -25,7 +25,7 @@ app.get('/motocycles', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('index', { motocycles: allMotocycles });
+      res.render('motocycles/index', { motocycles: allMotocycles });
     }
   });
 });
@@ -54,7 +54,7 @@ app.post('/motocycles', (req, res) => {
 
 // NEW - show form to add motocycles
 app.get('/motocycles/new', (req, res) => {
-  res.render('new.ejs');
+  res.render('motocycles/new');
 });
 
 // SHOW - show a particular moto
@@ -67,9 +67,48 @@ app.get('/motocycles/:id', (req, res) => {
         console.log(err);
       } else {
         // show the moto
-        res.render('show', { motocycle: motocycle });
+        res.render('motocycles/show', { motocycle: motocycle });
       }
     });
+});
+
+//##################################
+// Comments Routes
+//##################################
+
+app.get('/motocycles/:id/comments/new', (req, res) => {
+  Motocycle.findById(req.params.id, (err, motocycle) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('comments/new', { motocycle: motocycle });
+    }
+  });
+});
+
+app.post('/motocycles/:id/comments', (req, res) => {
+  // lookup moto using ID
+  Motocycle.findById(req.params.id, (err, motocycle) => {
+    if (err) {
+      console.log(err);
+      res.redirect('/motocycles');
+    } else {
+      console.log(req.body.comment);
+      // Comment.create()
+      Comment.create(req.body.comment, (err, comment) => {
+        if (err) {
+          console.log(err);
+        } else {
+          motocycle.comments.push(comment);
+          motocycle.save();
+          res.redirect('/motocycles/' + motocycle._id);
+        }
+      });
+    }
+  });
+  // create comment
+  //connect comment to moto
+  // redirect to show
 });
 
 app.listen(3000, () => {

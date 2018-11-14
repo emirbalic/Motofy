@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
 <h1><%= motocycle.name %></h1>
 
@@ -7,10 +7,14 @@
 <img src="<%= motocycle.image %>" alt="Image" />
 
 <p><%= motocycle.description %></p>
-
+<p>
+  <a class="btn btn-success" href="/motocycles/<%=motocycle._id%>/comments/new"
+    >Add New Comment</a
+  >
+</p>
 <% motocycle.comments.forEach((comment) => { %>
 <p>
   <strong> <%= comment.author %> </strong>
   <strong> <%= comment.text %> </strong>
 </p>
-<%})%> <% include partials/footer %>
+<%})%> <% include ../partials/footer %>
