@@ -3,6 +3,7 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   Motocycle = require('./models/motocycle');
+Comment = require('./models/comment');
 
 //   mongodb://<dbuser>:<dbpassword>@ds161653.mlab.com:61653/motofy
 mongoose.connect(
@@ -58,15 +59,17 @@ app.get('/motocycles/new', (req, res) => {
 
 // SHOW - show a particular moto
 app.get('/motocycles/:id', (req, res) => {
-  //find the moto
-  Motocycle.findById(req.params.id, (err, motocycle) => {
-    if (err) {
-      console.log(err);
-    } else {
-      // show the moto
-      res.render('show', { motocycle: motocycle });
-    }
-  });
+  //find the moto with the id and associate with comments
+  Motocycle.findById(req.params.id)
+    .populate('comments')
+    .exec((err, motocycle) => {
+      if (err) {
+        console.log(err);
+      } else {
+        // show the moto
+        res.render('show', { motocycle: motocycle });
+      }
+    });
 });
 
 app.listen(3000, () => {

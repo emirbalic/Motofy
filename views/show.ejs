@@ -8,4 +8,9 @@
 
 <p><%= motocycle.description %></p>
 
-<% include partials/footer %>
+<% motocycle.comments.forEach((comment) => { %>
+<p>
+  <strong> <%= comment.author %> </strong>
+  <strong> <%= comment.text %> </strong>
+</p>
+<%})%> <% include partials/footer %>

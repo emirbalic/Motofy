@@ -17,7 +17,9 @@
   <% motocycles.forEach(motocycle => { %>
   <div class="col-md-3 col-sm-6">
     <div class="thumbnail">
-      <img src="<%=motocycle.image%>" alt="photo" />
+      <a href="/motocycles/<%=motocycle._id%>">
+        <img src="<%=motocycle.image%>" alt="photo" />
+      </a>
       <div class="caption">
         <h4><%=motocycle.name%></h4>
         <h5><strong><%=motocycle.brand%></strong></h5>
