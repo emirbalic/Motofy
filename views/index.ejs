@@ -17,11 +17,17 @@
   <% motocycles.forEach(motocycle => { %>
   <div class="col-md-3 col-sm-6">
     <div class="thumbnail">
+      <img src="<%=motocycle.image%>" alt="photo" />
       <div class="caption">
         <h4><%=motocycle.name%></h4>
-        <h5><em><%=motocycle.brand%></em></h5>
+        <h5><strong><%=motocycle.brand%></strong></h5>
+        <p>
+          <a href="/motocycles/<%=motocycle._id%>" class="btn btn-primary"
+            >More Info</a
+          >
+        </p>
+        <h5><em><%=motocycle.description%></em></h5>
       </div>
-      <img src="<%=motocycle.image%>" alt="photo" />
     </div>
   </div>
   <% }); %>
