@@ -165,6 +165,12 @@ app.post(
   (req, res) => {}
 );
 
+// loggout route
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/motocycles');
+});
+
 app.listen(3000, () => {
   console.log('Il server è in ascolto');
 });
