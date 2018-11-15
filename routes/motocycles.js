@@ -18,29 +18,35 @@ router.get('/', (req, res) => {
 });
 
 // CREATE - add new to database
-router.post('/', (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
   //res.send('Post route');
   //get data from form and add to array
   var brand = req.body.brand;
   var name = req.body.name;
   var image = req.body.image;
   var description = req.body.description;
+  var author = {
+    id: req.user._id,
+    username: req.user.username
+  };
   var newMoto = {
     brand: brand,
     name: name,
     image: image,
-    description: description
+    description: description,
+    author: author
   };
-  Motocycle.create(newMoto, (err, myMoto) => {
+  Motocycle.create(newMoto, err => {
     if (err) {
       console.log(err);
     }
+    // console.log(myMoto);   , myMoto
     res.redirect('/motocycles');
   });
 });
 
 // NEW - show form to add motocycles
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.render('motocycles/new');
 });
 

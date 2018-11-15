@@ -55,7 +55,7 @@ router.post('/login', function(req, res, next) {
       }
       var redirectTo = req.session.redirectTo
         ? req.session.redirectTo
-        : '/campgrounds';
+        : '/motocycles';
       delete req.session.redirectTo;
       res.redirect(redirectTo);
     });
