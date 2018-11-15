@@ -91,6 +91,17 @@ router.put('/:id', (req, res) => {
   );
 });
 
+// destroy route
+router.delete('/:id', (req, res) => {
+  Motocycle.findByIdAndRemove(req.params.id, err => {
+    if (err) {
+      res.redirect('/motocycles');
+    } else {
+      res.redirect('/motocycles');
+    }
+  });
+});
+
 // Middleware
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {

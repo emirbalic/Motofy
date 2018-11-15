@@ -22,6 +22,15 @@
           <a href="/motocycles/<%=motocycle._id%>/edit" class="btn btn-warning"
             >Edit info about <%=motocycle.name%></a
           >
+          <form
+            action="/motocycles/<%=motocycle._id%>?_method=DELETE"
+            method="POST"
+            id="delete-form"
+          >
+            <button class="btn btn-danger">
+              Delete info about <%=motocycle.name%>
+            </button>
+          </form>
         </div>
       </div>
       <div class="well">
