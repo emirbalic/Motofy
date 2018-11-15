@@ -66,18 +66,14 @@ router.get('/:id', (req, res) => {
 });
 
 // Edit moto route
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', isOwner, (req, res) => {
   Motocycle.findById(req.params.id, (err, motocycle) => {
-    if (err) {
-      res.redirect('/motocycles');
-    } else {
-      res.render('motocycles/edit', { motocycle: motocycle });
-    }
+    res.render('motocycles/edit', { motocycle: motocycle });
   });
 });
 
 // Update moto route
-router.put('/:id', (req, res) => {
+router.put('/:id', isOwner, (req, res) => {
   Motocycle.findByIdAndUpdate(
     req.params.id,
     req.body.motocycle,
@@ -92,7 +88,7 @@ router.put('/:id', (req, res) => {
 });
 
 // destroy route
-router.delete('/:id', (req, res) => {
+router.delete('/:id', isOwner, (req, res) => {
   Motocycle.findByIdAndRemove(req.params.id, err => {
     if (err) {
       res.redirect('/motocycles');
@@ -108,6 +104,26 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   res.redirect('/login');
+}
+
+function isOwner(req, res, next) {
+  if (req.isAuthenticated()) {
+    Motocycle.findById(req.params.id, (err, motocycle) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        if (motocycle.author.id.equals(req.user.id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+    // console.log('You need to be logged in to do that');
+    // res.send('You need to be logged in to do that');
+  }
 }
 
 module.exports = router;

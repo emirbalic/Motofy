@@ -19,6 +19,8 @@
           <p><%= motocycle.brand %></p>
           <p><%= motocycle.description %></p>
           <p>Submitted by: <em> <%= motocycle.author.username %> </em></p>
+          <% if (currentUser && motocycle.author.id.equals(currentUser._id)) {
+          %>
           <a href="/motocycles/<%=motocycle._id%>/edit" class="btn btn-warning"
             >Edit info about <%=motocycle.name%></a
           >
@@ -31,6 +33,7 @@
               Delete info about <%=motocycle.name%>
             </button>
           </form>
+          <%}%>
         </div>
       </div>
       <div class="well">

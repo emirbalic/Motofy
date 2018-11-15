@@ -42,7 +42,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Middleware for all routes in order to use the header.ejs ()
+// Middleware for all routes in order to be accessible user.id - ex. to use the header.ejs ()
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
