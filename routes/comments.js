@@ -33,8 +33,14 @@ router.post('/', isLoggedIn, (req, res) => {
         if (err) {
           console.log(err);
         } else {
+          //add username and id to comment
+          comment.author.id - req.user._id;
+          comment.author.username = req.user.username;
+          //save comment
+          comment.save();
           motocycle.comments.push(comment);
           motocycle.save();
+          console.log(comment);
           res.redirect('/motocycles/' + motocycle._id);
         }
       });
@@ -47,6 +53,8 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
+  req.session.redirectTo = req.originalUrl;
+  //   req.flash('error', 'You need to be logged in to do that');
   res.redirect('/login');
 }
 

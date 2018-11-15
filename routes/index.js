@@ -32,14 +32,35 @@ router.get('/login', (req, res) => {
 });
 
 // handling login logic
-router.post(
-  '/login',
-  passport.authenticate('local', {
-    successRedirect: '/motocycles',
-    failureRedirect: '/login'
-  }),
-  (req, res) => {}
-);
+// router.post(
+//   '/login',
+//   passport.authenticate('local', {
+//     successRedirect: '/motocycles',
+//     failureRedirect: '/login'
+//   }),
+//   (req, res) => {}
+// );
+
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.redirect('/login');
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+      var redirectTo = req.session.redirectTo
+        ? req.session.redirectTo
+        : '/campgrounds';
+      delete req.session.redirectTo;
+      res.redirect(redirectTo);
+    });
+  })(req, res, next);
+});
 
 // loggout route
 router.get('/logout', (req, res) => {
