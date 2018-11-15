@@ -8,14 +8,14 @@
     <div style="width: 30%; margin: 40px  auto">
       <form action="/motocycles/<%= motocycle._id %>/comments" method="POST">
         <div class="form-group">
-          <input
+          <textarea
+            class="input form-control"
             class="form-control"
             type="text"
             name="comment[text]"
-            placeholder="Text"
-          />
+            placeholder="What do you think of it..?"
+          ></textarea>
         </div>
-        <!-- for a description, so far, but need a text area -->
         <div class="form-group">
           <input
             class="form-control"
