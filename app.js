@@ -2,6 +2,9 @@ var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
+  passport = require('passport'),
+  LocalStrategy = require('passport-local'),
+  User = require('./models/user'),
   Motocycle = require('./models/motocycle'),
   Comment = require('./models/comment');
 
@@ -15,6 +18,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
+
+// PASSPORT CONFIGURATION
+app.use(
+  require('express-session')({
+    secret: 'Lillie is my first love',
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get('/', (req, res) => {
   res.render('landing');
@@ -108,9 +126,29 @@ app.post('/motocycles/:id/comments', (req, res) => {
       });
     }
   });
-  // create comment
-  //connect comment to moto
-  // redirect to show
+});
+
+// ================
+// AUTH ROUTES
+// ================
+
+// show registration form
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+// handle sign up logic
+app.post('/register', (req, res) => {
+  var newUser = new User({ username: req.body.username });
+  User.register(newUser, req.body.password, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.render('register');
+    }
+    passport.authenticate('local')(req, res, () => {
+      res.redirect('/motocycles');
+    });
+  });
 });
 
 app.listen(3000, () => {
