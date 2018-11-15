@@ -150,6 +150,20 @@ app.post('/register', (req, res) => {
     });
   });
 });
+// show login form
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+// handling login logic
+app.post(
+  '/login',
+  passport.authenticate('local', {
+    successRedirect: '/motocycles',
+    failureRedirect: '/login'
+  }),
+  (req, res) => {}
+);
 
 app.listen(3000, () => {
   console.log('Il server è in ascolto');
