@@ -65,6 +65,33 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// Edit moto route
+router.get('/:id/edit', (req, res) => {
+  Motocycle.findById(req.params.id, (err, motocycle) => {
+    if (err) {
+      res.redirect('/motocycles');
+    } else {
+      res.render('motocycles/edit', { motocycle: motocycle });
+    }
+  });
+});
+
+// Update moto route
+router.put('/:id', (req, res) => {
+  Motocycle.findByIdAndUpdate(
+    req.params.id,
+    req.body.motocycle,
+    (err, motocycle) => {
+      if (err) {
+        res.redirect('/motocycle');
+      } else {
+        res.redirect('/motocycles/' + req.params.id);
+      }
+    }
+  );
+});
+
+// Middleware
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();

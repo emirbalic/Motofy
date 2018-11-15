@@ -4,9 +4,8 @@ var express = require('express'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   LocalStrategy = require('passport-local'),
-  User = require('./models/user'),
-  Motocycle = require('./models/motocycle'),
-  Comment = require('./models/comment');
+  methodOverride = require('method-override'),
+  User = require('./models/user');
 
 // require routes
 var commentRoutes = require('./routes/comments'),
@@ -22,7 +21,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 
+// setting a path to a static css
 app.use(express.static(__dirname + '/public'));
+
+//
+app.use(methodOverride('_method'));
 
 // PASSPORT CONFIGURATION
 app.use(
