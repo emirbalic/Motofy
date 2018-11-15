@@ -34,6 +34,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Middleware for all routes in order to use the header.ejs ()
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.get('/', (req, res) => {
   res.render('landing');
 });
@@ -45,7 +51,10 @@ app.get('/motocycles', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('motocycles/index', { motocycles: allMotocycles });
+      res.render('motocycles/index', {
+        motocycles: allMotocycles,
+        currentUser: req.user
+      });
     }
   });
 });
@@ -92,11 +101,11 @@ app.get('/motocycles/:id', (req, res) => {
     });
 });
 
-//##################################
+// ================
 // Comments Routes
-//##################################
+// ================
 
-app.get('/motocycles/:id/comments/new', (req, res) => {
+app.get('/motocycles/:id/comments/new', isLoggedIn, (req, res) => {
   Motocycle.findById(req.params.id, (err, motocycle) => {
     if (err) {
       console.log(err);
@@ -106,7 +115,7 @@ app.get('/motocycles/:id/comments/new', (req, res) => {
   });
 });
 
-app.post('/motocycles/:id/comments', (req, res) => {
+app.post('/motocycles/:id/comments', isLoggedIn, (req, res) => {
   // lookup moto using ID
   Motocycle.findById(req.params.id, (err, motocycle) => {
     if (err) {
@@ -170,6 +179,13 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/motocycles');
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
 
 app.listen(3000, () => {
   console.log('Il server è in ascolto');
