@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Motocycle = require('../models/motocycle');
+var middleware = require('../middleware/');
 
 // INDEX - show all motocycles
 router.get('/', (req, res) => {
@@ -18,7 +19,7 @@ router.get('/', (req, res) => {
 });
 
 // CREATE - add new to database
-router.post('/', isLoggedIn, (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
   //res.send('Post route');
   //get data from form and add to array
   var brand = req.body.brand;
@@ -46,7 +47,7 @@ router.post('/', isLoggedIn, (req, res) => {
 });
 
 // NEW - show form to add motocycles
-router.get('/new', isLoggedIn, (req, res) => {
+router.get('/new', middleware.isLoggedIn, (req, res) => {
   res.render('motocycles/new');
 });
 
@@ -66,14 +67,14 @@ router.get('/:id', (req, res) => {
 });
 
 // Edit moto route
-router.get('/:id/edit', isMotocycleOwner, (req, res) => {
+router.get('/:id/edit', middleware.isMotocycleOwner, (req, res) => {
   Motocycle.findById(req.params.id, (err, motocycle) => {
     res.render('motocycles/edit', { motocycle: motocycle });
   });
 });
 
 // Update moto route
-router.put('/:id', isMotocycleOwner, (req, res) => {
+router.put('/:id', middleware.isMotocycleOwner, (req, res) => {
   Motocycle.findByIdAndUpdate(
     req.params.id,
     req.body.motocycle,
@@ -88,7 +89,7 @@ router.put('/:id', isMotocycleOwner, (req, res) => {
 });
 
 // destroy route
-router.delete('/:id', isMotocycleOwner, (req, res) => {
+router.delete('/:id', middleware.isMotocycleOwner, (req, res) => {
   Motocycle.findByIdAndRemove(req.params.id, err => {
     if (err) {
       res.redirect('/motocycles');
@@ -99,31 +100,31 @@ router.delete('/:id', isMotocycleOwner, (req, res) => {
 });
 
 // Middleware
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
+// function isLoggedIn(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     return next();
+//   }
+//   res.redirect('/login');
+// }
 
-function isMotocycleOwner(req, res, next) {
-  if (req.isAuthenticated()) {
-    Motocycle.findById(req.params.id, (err, motocycle) => {
-      if (err) {
-        res.redirect('back');
-      } else {
-        if (motocycle.author.id.equals(req.user.id)) {
-          next();
-        } else {
-          res.redirect('back');
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-    // console.log('You need to be logged in to do that');
-    // res.send('You need to be logged in to do that');
-  }
-}
+// function isMotocycleOwner(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     Motocycle.findById(req.params.id, (err, motocycle) => {
+//       if (err) {
+//         res.redirect('back');
+//       } else {
+//         if (motocycle.author.id.equals(req.user.id)) {
+//           next();
+//         } else {
+//           res.redirect('back');
+//         }
+//       }
+//     });
+//   } else {
+//     res.redirect('back');
+//     // console.log('You need to be logged in to do that');
+//     // res.send('You need to be logged in to do that');
+//   }
+// }
 
 module.exports = router;
