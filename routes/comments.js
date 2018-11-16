@@ -27,14 +27,14 @@ router.post('/', isLoggedIn, (req, res) => {
       console.log(err);
       res.redirect('/motocycles');
     } else {
-      console.log(req.body.comment);
+      // console.log(req.body.comment);
       // Comment.create()
       Comment.create(req.body.comment, (err, comment) => {
         if (err) {
           console.log(err);
         } else {
-          //add username and id to comment
-          comment.author.id - req.user._id;
+          //add username and id to comment  HERE I HAD A BIG ONE - INSTEAD OF =...
+          comment.author.id = req.user._id;
           comment.author.username = req.user.username;
           //save comment
           comment.save();
@@ -48,7 +48,7 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 // comment edit route
-router.get('/:comment_id/edit', (req, res) => {
+router.get('/:comment_id/edit', isCommentOwner, (req, res) => {
   Comment.findById(req.params.comment_id, (err, comment) => {
     if (err) {
       res.redirect('back');
@@ -75,7 +75,7 @@ router.put('/:comment_id', (req, res) => {
   );
 });
 // delete/destroy route
-router.delete('/:comment_id', (req, res) => {
+router.delete('/:comment_id', isCommentOwner, (req, res) => {
   Comment.findByIdAndDelete(req.params.comment_id, err => {
     if (err) {
       res.redirect('back');
@@ -93,6 +93,31 @@ function isLoggedIn(req, res, next) {
   req.session.redirectTo = req.originalUrl;
   //   req.flash('error', 'You need to be logged in to do that');
   res.redirect('/login');
+}
+
+function isCommentOwner(req, res, next) {
+  // is any user logged in?
+  if (req.isAuthenticated()) {
+    Comment.findById(req.params.comment_id, (err, comment) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        console.log(req.user._id);
+        console.log(comment.author.id);
+        console.log(comment);
+
+        if (comment.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+    // console.log('You need to be logged in to do that');
+    // res.send('You need to be logged in to do that');
+  }
 }
 
 module.exports = router;

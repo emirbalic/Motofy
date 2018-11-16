@@ -66,14 +66,14 @@ router.get('/:id', (req, res) => {
 });
 
 // Edit moto route
-router.get('/:id/edit', isOwner, (req, res) => {
+router.get('/:id/edit', isMotocycleOwner, (req, res) => {
   Motocycle.findById(req.params.id, (err, motocycle) => {
     res.render('motocycles/edit', { motocycle: motocycle });
   });
 });
 
 // Update moto route
-router.put('/:id', isOwner, (req, res) => {
+router.put('/:id', isMotocycleOwner, (req, res) => {
   Motocycle.findByIdAndUpdate(
     req.params.id,
     req.body.motocycle,
@@ -88,7 +88,7 @@ router.put('/:id', isOwner, (req, res) => {
 });
 
 // destroy route
-router.delete('/:id', isOwner, (req, res) => {
+router.delete('/:id', isMotocycleOwner, (req, res) => {
   Motocycle.findByIdAndRemove(req.params.id, err => {
     if (err) {
       res.redirect('/motocycles');
@@ -106,7 +106,7 @@ function isLoggedIn(req, res, next) {
   res.redirect('/login');
 }
 
-function isOwner(req, res, next) {
+function isMotocycleOwner(req, res, next) {
   if (req.isAuthenticated()) {
     Motocycle.findById(req.params.id, (err, motocycle) => {
       if (err) {

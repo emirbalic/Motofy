@@ -54,6 +54,7 @@
             <strong> <%= comment.author.username %> </strong>
             <span class="pull-right"> 10 days ago </span>
             <p><%= comment.text %></p>
+            <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
             <a
               href="/motocycles/<%=motocycle._id%>/comments/<%=comment._id%>/edit"
               class="btn btn-xs btn-warning"
@@ -70,6 +71,7 @@
                 value="Delete"
               />
             </form>
+            <% } %>
           </div>
         </div>
         <%})%>
