@@ -47,6 +47,33 @@ router.post('/', isLoggedIn, (req, res) => {
     }
   });
 });
+// comment edit route
+router.get('/:comment_id/edit', (req, res) => {
+  Comment.findById(req.params.comment_id, (err, comment) => {
+    if (err) {
+      res.redirect('back');
+    } else {
+      res.render('comments/edit', {
+        motocycle_id: req.params.id,
+        comment: comment
+      });
+    }
+  });
+});
+// comment update route
+router.put('/:comment_id', (req, res) => {
+  Comment.findByIdAndUpdate(
+    req.params.comment_id,
+    req.body.comment,
+    (err, comment) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        res.redirect('/motocycles/' + req.params.id);
+      }
+    }
+  );
+});
 
 // Middleware
 function isLoggedIn(req, res, next) {

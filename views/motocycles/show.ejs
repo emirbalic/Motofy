@@ -29,7 +29,10 @@
             method="POST"
             id="delete-form"
           >
-            <button class="btn btn-danger">
+            <button
+              onclick="return confirm('Are you sure you want to delete info on <%=motocycle.name%>?');"
+              class="btn btn-danger"
+            >
               Delete info about <%=motocycle.name%>
             </button>
           </form>
@@ -51,6 +54,11 @@
             <strong> <%= comment.author.username %> </strong>
             <span class="pull-right"> 10 days ago </span>
             <p><%= comment.text %></p>
+            <a
+              href="/motocycles/<%=motocycle._id%>/comments/<%=comment._id%>/edit"
+              class="btn btn-xs btn-warning"
+              >Edit
+            </a>
           </div>
         </div>
         <%})%>
