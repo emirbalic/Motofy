@@ -74,6 +74,16 @@ router.put('/:comment_id', (req, res) => {
     }
   );
 });
+// delete/destroy route
+router.delete('/:comment_id', (req, res) => {
+  Comment.findByIdAndDelete(req.params.comment_id, err => {
+    if (err) {
+      res.redirect('back');
+    } else {
+      res.redirect('/motocycles/' + req.params.id);
+    }
+  });
+});
 
 // Middleware
 function isLoggedIn(req, res, next) {

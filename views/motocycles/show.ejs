@@ -27,7 +27,7 @@
           <form
             action="/motocycles/<%=motocycle._id%>?_method=DELETE"
             method="POST"
-            id="delete-form"
+            class="delete-form"
           >
             <button
               onclick="return confirm('Are you sure you want to delete info on <%=motocycle.name%>?');"
@@ -59,6 +59,17 @@
               class="btn btn-xs btn-warning"
               >Edit
             </a>
+            <form
+              action="/motocycles/<%=motocycle._id%>/comments/<%=comment._id%>?_method=DELETE"
+              method="POST"
+              class="delete-form"
+            >
+              <input
+                type="submit"
+                class="btn btn-xs btn-danger"
+                value="Delete"
+              />
+            </form>
           </div>
         </div>
         <%})%>
