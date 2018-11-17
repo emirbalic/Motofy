@@ -14,9 +14,10 @@
       <div class="thumbnail">
         <img class="img-responsive" src="<%= motocycle.image %>" alt="Image" />
         <div class="caption">
-          <h4 class="pull-right">Price paid: $10000</h4>
+          <h4 class="pull-right">Price paid: $<%= motocycle.price %></h4>
           <h4><%= motocycle.name %></h4>
           <p><%= motocycle.brand %></p>
+          <p><%= motocycle.year %></p>
           <p><%= motocycle.description %></p>
           <p>Submitted by: <em> <%= motocycle.author.username %> </em></p>
           <% if (currentUser && motocycle.author.id.equals(currentUser._id)) {

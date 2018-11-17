@@ -29,7 +29,24 @@
             value="<%=motocycle.image%>"
           />
         </div>
-        <!-- for a description, so far, but need a text area -->
+        <div class="form-group">
+          <input
+            class="form-control"
+            type="number"
+            name="motocycle[price]"
+            min="1"
+            step="1"
+            value="<%=motocycle.price%>"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            class="form-control"
+            type="text"
+            name="motocycle[year]"
+            value="<%=motocycle.year%>"
+          />
+        </div>
         <div class="form-group">
           <!-- will try here -->
           <textarea

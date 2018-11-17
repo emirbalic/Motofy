@@ -25,6 +25,8 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
   var brand = req.body.brand;
   var name = req.body.name;
   var image = req.body.image;
+  var price = req.body.price;
+  var year = req.body.year;
   var description = req.body.description;
   var author = {
     id: req.user._id,
@@ -34,6 +36,8 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
     brand: brand,
     name: name,
     image: image,
+    price: price,
+    year: year,
     description: description,
     author: author
   };

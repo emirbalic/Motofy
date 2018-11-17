@@ -5,6 +5,8 @@ var motocycleSchema = new mongoose.Schema({
   name: String,
   brand: String,
   image: String,
+  price: String,
+  year: String,
   description: String,
   author: {
     id: {
