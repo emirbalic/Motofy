@@ -18,10 +18,11 @@ router.post('/register', (req, res) => {
   var newUser = new User({ username: req.body.username });
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {
-      console.log(err);
+      req.flash('error', err.message);
       return res.render('register');
     }
     passport.authenticate('local')(req, res, () => {
+      req.flash('succes', 'Welcome to Motofy' + user.username + '!');
       res.redirect('/motocycles');
     });
   });
@@ -47,6 +48,7 @@ router.post('/login', function(req, res, next) {
       return next(err);
     }
     if (!user) {
+      req.flash('error', 'You have to provide credentials!');
       return res.redirect('/login');
     }
     req.logIn(user, function(err) {

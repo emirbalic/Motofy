@@ -33,6 +33,8 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
       // Comment.create()
       Comment.create(req.body.comment, (err, comment) => {
         if (err) {
+          req.flash('error', 'Something went wrong!');
+
           console.log(err);
         } else {
           //add username and id to comment  HERE I HAD A BIG ONE - INSTEAD OF =...
@@ -43,6 +45,8 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
           motocycle.comments.push(comment);
           motocycle.save();
           console.log(comment);
+          req.flash('success', 'Successfully commented!');
+
           res.redirect('/motocycles/' + motocycle._id);
         }
       });
