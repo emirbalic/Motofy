@@ -3,6 +3,7 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   passport = require('passport'),
+  flash = require('connect-flash'),
   LocalStrategy = require('passport-local'),
   methodOverride = require('method-override'),
   User = require('./models/user');
@@ -24,7 +25,8 @@ app.set('view engine', 'ejs');
 // setting a path to a static css
 app.use(express.static(__dirname + '/public'));
 
-//
+app.use(flash());
+// enable use of put and delete routes
 app.use(methodOverride('_method'));
 
 // PASSPORT CONFIGURATION
