@@ -25,6 +25,7 @@ app.set('view engine', 'ejs');
 // setting a path to a static css
 app.use(express.static(__dirname + '/public'));
 
+// add message to the next routhe to display to user
 app.use(flash());
 // enable use of put and delete routes
 app.use(methodOverride('_method'));
@@ -47,6 +48,8 @@ passport.deserializeUser(User.deserializeUser());
 // Middleware for all routes in order to be accessible user.id - ex. to use the header.ejs ()
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
   next();
 });
 

@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
 });
 // show login form
 router.get('/login', (req, res) => {
-  res.render('login', { message: req.flash('error') });
+  res.render('login');
 });
 
 // handling login logic
@@ -65,15 +65,16 @@ router.post('/login', function(req, res, next) {
 // loggout route
 router.get('/logout', (req, res) => {
   req.logout();
+  req.flash('success', 'Logged you out');
   res.redirect('/motocycles');
 });
 
-// Middleware
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
+// // Middleware
+// function isLoggedIn(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     return next();
+//   }
+//   res.redirect('/login');
+// }
 
 module.exports = router;
