@@ -1,12 +1,14 @@
 <% include ../partials/header %>
 
-<!-- header -->
-
 <div class="bg" style="background-color:rgb(53, 104, 105);">
   <div class="container">
     <header class="jumbotron">
       <div class="container">
+        <%if (currentUser && currentUser.isAdmin) { %>
+        <h1>Welcome to Motofy <%=currentUser.username%> !</h1>
+        <% } else {%>
         <h1>Welcome to Motofy!</h1>
+        <% } %>
         <p>Take a look at the best looking bikes in the world</p>
         <p>
           <a class="btn btn-primary btn-large" href="motocycles/new"

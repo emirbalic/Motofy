@@ -11,7 +11,7 @@ middlewareObject.isCommentOwner = (req, res, next) => {
         res.redirect('back');
       } else {
         // does user own the Motocycle
-        if (comment.author.id.equals(req.user._id)) {
+        if (comment.author.id.equals(req.user._id) || req.user.isAdmin) {
           next();
         } else {
           req.flash('error', "You don't have permission to do that!");
@@ -35,7 +35,7 @@ middlewareObject.isMotocycleOwner = (req, res, next) => {
         req.flash('error', 'Motocycle not found!');
         res.redirect('back');
       } else {
-        if (motocycle.author.id.equals(req.user.id)) {
+        if (motocycle.author.id.equals(req.user.id) || req.user.isAdmin) {
           next();
         } else {
           req.flash('error', "You don't have permission to do that!");

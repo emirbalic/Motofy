@@ -30,6 +30,7 @@
     "passport-local-mongoose": "^5.0.1"
   },
   "devDependencies": {
+    "locus": "^2.0.1",
     "nodemon": "^1.18.6"
   }
 }

@@ -20,8 +20,8 @@
           <p><%= motocycle.year %></p>
           <p><%= motocycle.description %></p>
           <p>Submitted by: <em> <%= motocycle.author.username %> </em></p>
-          <% if (currentUser && motocycle.author.id.equals(currentUser._id)) {
-          %>
+          <% if (currentUser && motocycle.author.id.equals(currentUser._id) ||
+          (currentUser && currentUser.isAdmin)) { %>
           <a href="/motocycles/<%=motocycle._id%>/edit" class="btn btn-warning"
             >Edit info about <%=motocycle.name%></a
           >
@@ -55,7 +55,8 @@
             <strong> <%= comment.author.username %> </strong>
             <span class="pull-right"> 10 days ago </span>
             <p><%= comment.text %></p>
-            <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+            <% if(currentUser && comment.author.id.equals(currentUser._id)||
+            (currentUser && currentUser.isAdmin)) { %>
             <a
               href="/motocycles/<%=motocycle._id%>/comments/<%=comment._id%>/edit"
               class="btn btn-xs btn-warning"
