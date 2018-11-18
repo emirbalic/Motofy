@@ -26,7 +26,7 @@
             <li><a href="/register">Sign Up</a></li>
             <% } else { %>
             <!-- here add a link to profile -->
-            <li><a href="#">Logged as <%= currentUser.username %> </a></li>
+            <li><a href="/users/<%=currentUser.id%>">Logged as <%= currentUser.username %> </a></li>
             <li><a href="/logout">Logout</a></li>
             <% } %>
           </ul>

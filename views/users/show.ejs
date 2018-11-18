@@ -1,0 +1,37 @@
+<% include ../partials/header %>
+
+<!-- <h1>User Page <%= user.firstname%></h1> -->
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <h1><%= user.firstname + " " + user.lastname%></h1>
+      <img src="<%= user.avatar %>" alt="Profile picture" />
+    </div>
+    <div class="caption pull-right">
+      <p>
+        Send an email to
+        <a href="mailto:<%= user.email%>"><%= user.username%></a>
+      </p>
+    </div>
+  </div>
+  <div class="col-md-8">
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. In at omnis minima
+    dolore molestias voluptatum dolores eum cupiditate voluptatibus quis, fuga
+    officia earum nostrum beatae ad, magnam laudantium autem dolorum.
+
+    <div class="row">
+        <h2><%= user.username%>'s images: </h2>
+      <ul>
+        <% motocycles.forEach((motocycle) => { %>
+        <li>
+            <a href="/motocycles/<%= motocycle.id %>">
+                <%= motocycle.name %></li>
+            </a>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var User = require('../models/user');
+var Motocycle = require('../models/motocycle');
 
 // Root route
 router.get('/', (req, res) => {
@@ -15,7 +16,13 @@ router.get('/register', (req, res) => {
 
 // handle sign up logic
 router.post('/register', (req, res) => {
-  var newUser = new User({ username: req.body.username }); //, isAdmin: admincode
+  var newUser = new User({
+    username: req.body.username,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    avatar: req.body.avatar
+  }); //, isAdmin: admincode
   if (req.body.admincode === '1234') {
     newUser.isAdmin = true;
   }
@@ -74,12 +81,21 @@ router.get('/logout', (req, res) => {
   res.redirect('/motocycles');
 });
 
-// // Middleware
-// function isLoggedIn(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     return next();
-//   }
-//   res.redirect('/login');
-// }
+// USER Profile
+router.get('/users/:id', (req, res) => {
+  User.findById(req.params.id, (err, user) => {
+    if (err){
+      req.flash('error', 'User does not exist');
+      res.redirect('back');
+    }
+    Motocycle.find().where('author.id').equals(user._id).exec((err, motocycles) => {
+      if(err){
+        req.flash('error', 'User does not exist');
+        res.redirect('back');
+      }
+      res.render('users/show', { user: user, motocycles: motocycles });
+    })
+  });
+})
 
 module.exports = router;
