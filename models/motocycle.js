@@ -8,6 +8,10 @@ var motocycleSchema = new mongoose.Schema({
   price: String,
   year: String,
   description: String,
+  created: {
+    type: Date,
+    default: Date.now
+  },
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,

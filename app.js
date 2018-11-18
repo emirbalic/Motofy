@@ -53,6 +53,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.locals.moment = require('moment');
+
 app.use(indexRoutes);
 app.use('/motocycles/:id/comments', commentRoutes);
 app.use('/motocycles', motocycleRoutes);
