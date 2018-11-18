@@ -7,7 +7,7 @@ middlewareObject.isCommentOwner = (req, res, next) => {
   // is any user logged in?
   if (req.isAuthenticated()) {
     Comment.findById(req.params.comment_id, (err, comment) => {
-      if (err) {
+      if (err || !comment) {
         res.redirect('back');
       } else {
         // does user own the Motocycle
@@ -31,7 +31,7 @@ middlewareObject.isCommentOwner = (req, res, next) => {
 middlewareObject.isMotocycleOwner = (req, res, next) => {
   if (req.isAuthenticated()) {
     Motocycle.findById(req.params.id, (err, motocycle) => {
-      if (err) {
+      if (err || !motocycle) {
         req.flash('error', 'Motocycle not found!');
         res.redirect('back');
       } else {
