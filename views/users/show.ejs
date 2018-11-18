@@ -16,10 +16,20 @@
     </div>
   </div>
   <div class="col-md-8">
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. In at omnis minima
-    dolore molestias voluptatum dolores eum cupiditate voluptatibus quis, fuga
-    officia earum nostrum beatae ad, magnam laudantium autem dolorum.
+      <div class="row">
+          <p>
+               <em>
 
+              <h3>
+                  <%= user.firstname %>'s story
+              </h3>
+          </em>
+          </p>
+          <article>
+              <%= user.about %>
+          </article>
+      </div>
+   
     <div class="row">
         <h2><%= user.username%>'s images: </h2>
       <ul>
