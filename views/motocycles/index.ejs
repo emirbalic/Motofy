@@ -15,10 +15,19 @@
             >Add New Moto</a
           >
         </p>
+        
       </div>
     </header>
 
     <div class="row text-center" style="display:flex; flex-wrap:wrap">
+      <!-- fuzzy search results   -->
+      <div class="col-md-12">
+            <% if(noMatch !== null) {%>
+            <h3>
+              <%= noMatch %>
+            </h3>
+            <% } %>
+          </div>
       <% motocycles.forEach(motocycle => { %>
       <div class="col-md-3 col-sm-6">
         <div class="thumbnail">

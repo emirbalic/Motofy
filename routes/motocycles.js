@@ -5,6 +5,29 @@ var middleware = require('../middleware/');
 
 // INDEX - show all motocycles
 router.get('/', (req, res) => {
+  // full if statement used for a fuzzy search, else original w/o noMatch
+  var noMatch = null;
+  if(req.query.search) {
+    const regex = new RegExp(fuzzySearch(req.query.search), 'gi');
+  
+  // should be good if accepts more parameters 
+  Motocycle.find({brand: regex}, (err, allMotocycles) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if(allMotocycles.length < 1) {
+        // req.flash('error', 'No motorcycles match your query, please try again');
+        // res.redirect('back');
+        noMatch = 'No motorcycles match your query, please try again';
+      }
+      res.render('motocycles/index', {
+        motocycles: allMotocycles,
+        currentUser: req.user,
+        noMatch: noMatch
+      });
+    }
+  });
+} else {
   // Get all the motos from DB -> .find({looking for everything})
   Motocycle.find({}, (err, allMotocycles) => {
     if (err) {
@@ -12,10 +35,12 @@ router.get('/', (req, res) => {
     } else {
       res.render('motocycles/index', {
         motocycles: allMotocycles,
-        currentUser: req.user
+        currentUser: req.user,
+        noMatch: noMatch
       });
     }
   });
+}
 });
 
 // CREATE - add new to database
@@ -102,6 +127,10 @@ router.delete('/:id', middleware.isMotocycleOwner, (req, res) => {
     }
   });
 });
+
+function fuzzySearch(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 // Middleware
 // function isLoggedIn(req, res, next) {
