@@ -74,6 +74,8 @@ router.post('/', middleware.isLoggedIn, upload.single('image'), function(req, re
   cloudinary.uploader.upload(req.file.path, function(result) {
     // getting the cloudinary url for the image to the motocycle object under image property
     req.body.motocycle.image = result.secure_url;
+    // add image's public_id to motocycle object
+     req.body.motocycle.imageId = result.public_id;
     // adding author to motocycle
     req.body.motocycle.author = {
       id: req.user._id,
@@ -117,30 +119,67 @@ router.get('/:id/edit', middleware.isMotocycleOwner, (req, res) => {
 });
 
 // Update moto route
-router.put('/:id', middleware.isMotocycleOwner, (req, res) => {
-  Motocycle.findByIdAndUpdate(
+router.put('/:id', middleware.isMotocycleOwner, upload.single('image'),   (req, res)=> {
+  Motocycle.findById(
     req.params.id,
-    req.body.motocycle,
-    (err, motocycle) => {
+    async (err, motocycle) => {
       if (err) {
-        res.redirect('/motocycle');
+        res.flash('error', err.message);
+        res.redirect('back');
       } else {
-        res.redirect('/motocycles/' + req.params.id);
+        if(req.file) {
+          try {
+            await cloudinary.v2.uploader.destroy(motocycle.imageId);             
+            var result = await cloudinary.v2.uploader.upload(req.file.path);
+            motocycle.imageId = result.public_id;
+            motocycle.image = result.secure_url;
+          } catch (err) {
+            res.flash('error', err.message);
+            return res.redirect('back');
+          }
+        }      
       }
-    }
-  );
-});
+      motocycle.name = req.body.motocycle.name;
+      motocycle.brand = req.body.motocycle.brand;
+      motocycle.price = req.body.motocycle.price;
+      motocycle.year = req.body.motocycle.year;
+      motocycle.description = req.body.motocycle.description;
+      motocycle.save();
+      req.flash('success', 'Successfully updated');
+      res.redirect('/motocycles/' + req.params.id);
+     })
+ });
 
-// destroy route
-router.delete('/:id', middleware.isMotocycleOwner, (req, res) => {
-  Motocycle.findByIdAndRemove(req.params.id, err => {
+ router.delete('/:id', middleware.isMotocycleOwner, (req, res) => {
+  Motocycle.findById(req.params.id, async (err, motocycle) => {
     if (err) {
-      res.redirect('/motocycles');
+      req.flash('error', err.message);
+      return res.redirect('/motocycles');
     } else {
-      res.redirect('/motocycles');
+      try {
+        await cloudinary.v2.uploader.destroy(motocycle.imageId); 
+        motocycle.remove();
+        req.flash('success', 'Successfully deleted!');
+        return res.redirect('/motocycles');            
+      } catch (err) {
+        if (err) {
+          req.flash('error', err.message);
+          return res.redirect('/motocycles');
+        } 
+      }
     }
   });
 });
+// destroy route
+// router.delete('/:id', middleware.isMotocycleOwner, (req, res) => {
+//   Motocycle.findByIdAndRemove(req.params.id, err => {
+//     if (err) {
+//       res.redirect('/motocycles');
+//     } else {
+//       res.redirect('/motocycles');
+//     }
+//   });
+// });
 
 function fuzzySearch(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
