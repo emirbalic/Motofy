@@ -4,12 +4,13 @@
   <div class="row">
     <h1 style="text-align:center">Show The World Your Motocycle</h1>
     <div style="width: 30%; margin: 40px  auto">
-      <form action="/motocycles" method="POST">
+        <!-- enctype = allows fileupload feature -->
+      <form action="/motocycles" method="POST" enctype="multipart/form-data"> 
         <div class="form-group">
           <input
             class="form-control"
             type="text"
-            name="name"
+            name="motocycle[name]"
             placeholder="Name"
           />
         </div>
@@ -17,23 +18,26 @@
           <input
             class="form-control"
             type="text"
-            name="brand"
+            name="motocycle[brand]"
             placeholder="Brand"
           />
         </div>
         <div class="form-group">
+          <label for="image"> Image </label>
           <input
             class="form-control"
-            type="text"
+            type="file"
+            id="image"
             name="image"
-            placeholder="Image Url"
+            accept="image/*"
+            required
           />
         </div>
         <div class="form-group">
           <input
             class="form-control"
             type="number"
-            name="price"
+            name="motocycle[price]"
             min="1"
             step="1"
             placeholder="Price Paid"
@@ -43,7 +47,7 @@
           <input
             class="form-control"
             type="text"
-            name="year"
+            name="motocycle[year]"
             placeholder="Year Made"
           />
         </div>
@@ -53,7 +57,7 @@
             class="input form-control"
             class="form-control"
             type="text"
-            name="description"
+            name="motocycle[description]"
             placeholder="Tell us a little something about your moto here..."
           ></textarea>
         </div>

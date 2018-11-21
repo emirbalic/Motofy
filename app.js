@@ -1,3 +1,9 @@
+// var dotenv = require('dotenv');
+// dotenv.load();
+// require('dotenv').config({path: __dirname + '/.env'})
+// require('dotenv').config({ debug: process.env.DEBUG });
+
+
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
@@ -13,11 +19,14 @@ var commentRoutes = require('./routes/comments'),
   motocycleRoutes = require('./routes/motocycles'),
   indexRoutes = require('./routes/index');
 
-//   mongodb://<dbuser>:<dbpassword>@ds161653.mlab.com:61653/motofy
 mongoose.connect(
   'mongodb://bakke:bakke2000@ds161653.mlab.com:61653/motofy',
   { useNewUrlParser: true }
 );
+//this line is here only to get rid of 
+// node:8605) DeprecationWarning: collection.ensureIndex is deprecated. Use createIndexes instead.
+mongoose.set('useCreateIndex', true);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');

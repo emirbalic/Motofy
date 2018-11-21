@@ -1,0 +1,30 @@
+1. refactored Create add new moto to the dB
+//get data from form and add to array
+  var brand = req.body.brand;
+  var name = req.body.name;
+  var image = req.body.image;
+  var price = req.body.price;
+  var year = req.body.year;
+  var description = req.body.description;
+  var author = {
+    id: req.user._id,
+    username: req.user.username
+  };
+  var newMoto = {
+    brand: brand,
+    name: name,
+    image: image,
+    price: price,
+    year: year,
+    description: description,
+    author: author
+  };
+  Motocycle.create(newMoto, err => {
+    if (err) {
+      console.log(err);
+    }
+    // console.log(myMoto);   , myMoto
+    res.redirect('/motocycles');
+  });
+
+  2 - next

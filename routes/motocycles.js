@@ -2,76 +2,90 @@ var express = require('express');
 var router = express.Router();
 var Motocycle = require('../models/motocycle');
 var middleware = require('../middleware/');
+//request
+
+
+var multer = require('multer');
+var storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+var imageFilter = function(req, file, cb) {
+  // accept image files only
+  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+    return cb(new Error('Only image files are allowed!'), false);
+  }
+  cb(null, true);
+};
+var upload = multer({ storage: storage, fileFilter: imageFilter });
+
+var cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: 'motofy',
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET  
+});
 
 // INDEX - show all motocycles
 router.get('/', (req, res) => {
   // full if statement used for a fuzzy search, else original w/o noMatch
   var noMatch = null;
-  if(req.query.search) {
+  if (req.query.search) {
     const regex = new RegExp(fuzzySearch(req.query.search), 'gi');
-  
-  // should be good if accepts more parameters 
-  Motocycle.find({brand: regex}, (err, allMotocycles) => {
-    if (err) {
-      console.log(err);
-    } else {
-      if(allMotocycles.length < 1) {
-        // req.flash('error', 'No motorcycles match your query, please try again');
-        // res.redirect('back');
-        noMatch = 'No motorcycles match your query, please try again';
+
+    // should be good if accepts more parameters
+    Motocycle.find({ brand: regex }, (err, allMotocycles) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (allMotocycles.length < 1) {
+          // req.flash('error', 'No motorcycles match your query, please try again');
+          // res.redirect('back');
+          noMatch = 'No motorcycles match your query, please try again';
+        }
+        res.render('motocycles/index', {
+          motocycles: allMotocycles,
+          currentUser: req.user,
+          noMatch: noMatch
+        });
       }
-      res.render('motocycles/index', {
-        motocycles: allMotocycles,
-        currentUser: req.user,
-        noMatch: noMatch
-      });
-    }
-  });
-} else {
-  // Get all the motos from DB -> .find({looking for everything})
-  Motocycle.find({}, (err, allMotocycles) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render('motocycles/index', {
-        motocycles: allMotocycles,
-        currentUser: req.user,
-        noMatch: noMatch
-      });
-    }
-  });
-}
+    });
+  } else {
+    // Get all the motos from DB -> .find({looking for everything})
+    Motocycle.find({}, (err, allMotocycles) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render('motocycles/index', {
+          motocycles: allMotocycles,
+          currentUser: req.user,
+          noMatch: noMatch
+        });
+      }
+    });
+  }
 });
 
-// CREATE - add new to database
-router.post('/', middleware.isLoggedIn, (req, res) => {
-  //res.send('Post route');
-  //get data from form and add to array
-  var brand = req.body.brand;
-  var name = req.body.name;
-  var image = req.body.image;
-  var price = req.body.price;
-  var year = req.body.year;
-  var description = req.body.description;
-  var author = {
-    id: req.user._id,
-    username: req.user.username
-  };
-  var newMoto = {
-    brand: brand,
-    name: name,
-    image: image,
-    price: price,
-    year: year,
-    description: description,
-    author: author
-  };
-  Motocycle.create(newMoto, err => {
-    if (err) {
-      console.log(err);
-    }
-    // console.log(myMoto);   , myMoto
-    res.redirect('/motocycles');
+// CREATE - add new motorcycle to database
+router.post('/', middleware.isLoggedIn, upload.single('image'), function(req, res) {
+  //console.log(cloudinary.config);//file. req.file
+  cloudinary.uploader.upload(req.file.path, function(result) {
+    // getting the cloudinary url for the image to the motocycle object under image property
+    req.body.motocycle.image = result.secure_url;
+    // adding author to motocycle
+    req.body.motocycle.author = {
+      id: req.user._id,
+      username: req.user.username
+    };
+    Motocycle.create(req.body.motocycle, function(err, motocycle) {
+      if (err) {
+        req.flash('error', err.message);
+        return res.redirect('back');
+      }
+      res.redirect('/motocycles/' + motocycle.id);
+    });
   });
 });
 
@@ -129,35 +143,7 @@ router.delete('/:id', middleware.isMotocycleOwner, (req, res) => {
 });
 
 function fuzzySearch(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
-
-// Middleware
-// function isLoggedIn(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     return next();
-//   }
-//   res.redirect('/login');
-// }
-
-// function isMotocycleOwner(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     Motocycle.findById(req.params.id, (err, motocycle) => {
-//       if (err) {
-//         res.redirect('back');
-//       } else {
-//         if (motocycle.author.id.equals(req.user.id)) {
-//           next();
-//         } else {
-//           res.redirect('back');
-//         }
-//       }
-//     });
-//   } else {
-//     res.redirect('back');
-//     // console.log('You need to be logged in to do that');
-//     // res.send('You need to be logged in to do that');
-//   }
-// }
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
 
 module.exports = router;
