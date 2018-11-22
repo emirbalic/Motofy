@@ -2,7 +2,7 @@
 // dotenv.load();
 // require('dotenv').config({path: __dirname + '/.env'})
 // require('dotenv').config({ debug: process.env.DEBUG });
-
+require('dotenv').config()
 
 var express = require('express'),
   app = express(),
