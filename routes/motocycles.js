@@ -46,6 +46,7 @@ router.get('/', (req, res) => {
 
     // should be good if accepts more parameters
     Motocycle.find({ brand: regex }).skip((perPage * pageNumber)-perPage).limit(perPage).exec((err, allMotocycles) => {
+      Motocycle.count({name: regex}).exec(function (err, count) {
       if (err) {
         console.log(err);
         res.redirect('back');
@@ -65,6 +66,7 @@ router.get('/', (req, res) => {
         });
       }
     });
+  });
   } else {
     // Get all the motos from DB -> .find({looking for everything})
     Motocycle.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec((err, allMotocycles) => {
