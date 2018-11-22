@@ -9,7 +9,22 @@ body {
   padding-top: 40vh;
 }
 #landing-header h1 {
-  color: #fff;
+  color: rgba(241, 162, 43, 0.904);
+  font-size: 10em;
+}
+#landing-header h3 {
+  color: rgba(241, 162, 43, 0.904);
+}
+#landing-header hr {
+  
+  border-color: rgba(241, 162, 43, 0.904);
+  background: rgba(241, 162, 43, 0.904);
+  width: 500px;
+  /* border-top: 2px solid #f8f8f8; */
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
+}
+.btn-success {
+  background-color: rgba(241, 162, 43, 0.904);
 }
 
 .slideshow {

@@ -9,6 +9,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/stylesheets/landing.css" />
+    <!-- <link rel="stylesheet" href="/stylesheets/main.css" /> -->
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> -->
+
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
       type="text/javascript"
@@ -16,28 +19,41 @@
     ></script>
   </head>
   <body>
-    <div class="container">
+    <!-- <div class="container">
       <% if(error && error.length > 0){ %>
       <div class="alert alert-danger" role="alert"><%= error %></div>
       <% } %> <% if(success && success.length > 0){ %>
       <div class="alert alert-success" role="alert"><%= success %></div>
       <% } %>
-    </div>
+    </div> -->
 
     <div id="landing-header">
       <h1>M O T O F Y</h1>
+      <h3>
+        The Coolest Motocyclist's Place On The Web
+      </h3>
+      <hr>
       <a href="/motocycles" class="btn btn-lg btn-success"
-        >View All Motocycles</a
+        >View All Motocycles </i></a
       >
       <!-- Paragraph for a search -->
-      <p>
-          <form action="/motocycles" method="GET" class="form-inline">
-            <div class="form-group">
-              <input type="text" name="search" placeholder="Motorcycle search..." class="form-control">
-              <input type="submit" value="Search" class="btn btn-default" ></input>              
+    
+      <div class="container">
+        <div class="row">
+            <div id="content">
+          <p>
+              <form action="/motocycles" method="GET" class="form-inline">
+                <div class="form-group">
+                  <input type="text" name="search" placeholder="Motorcycle search..." class="form-control">
+                </div>
+                <div class="form-group">
+                  <input type="submit" value="Search" class="btn btn-default btn-info" ></input>              
+                </div>
+              </form>
+            </p>
             </div>
-          </form>
-        </p>
+        </div>
+      </div>
     </div>
     
 
