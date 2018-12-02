@@ -4,6 +4,8 @@ var router = express.Router({ mergeParams: true });
 var Motocycle = require('../models/motocycle');
 var Comment = require('../models/comment');
 
+var Reply = require('../models/reply');
+
 var middleware = require('../middleware/');
 
 // ================
@@ -53,6 +55,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
     }
   });
 });
+
 // comment edit route
 router.get('/:comment_id/edit', middleware.isCommentOwner, (req, res) => {
   Comment.findById(req.params.comment_id, (err, comment) => {
@@ -91,39 +94,116 @@ router.delete('/:comment_id', middleware.isCommentOwner, (req, res) => {
   });
 });
 
-// // Middleware
-// function isLoggedIn(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     return next();
-//   }
-//   req.session.redirectTo = req.originalUrl;
-//   //   req.flash('error', 'You need to be logged in to do that');
-//   res.redirect('/login');
-// }
+//====================
+//reply routes
+//====================
 
-// function isCommentOwner(req, res, next) {
-//   // is any user logged in?
-//   if (req.isAuthenticated()) {
-//     Comment.findById(req.params.comment_id, (err, comment) => {
-//       if (err) {
-//         res.redirect('back');
-//       } else {
-//         console.log(req.user._id);
-//         console.log(comment.author.id);
-//         console.log(comment);
+// reply create route
+router.get('/:comment_id/replies/new', middleware.isLoggedIn, (req, res) => {
+  //res.send('this is the path to there');
+  Motocycle.findById(req.params.id, (err, motocycle) => {
+    if (err) {
+      console.log(err);
+      res.redirect('back');
+    } else {
+      //console.log('5bfae5db280fbb0a85dbd0c8 =' + motocycle.id);
+      // }
+      Comment.findById(req.params.comment_id, (err, comment) => {
+        if (err) {
+          console.log(err);
+          res.redirect('back');
+        } else {
+          // console.log('this is again maybe :' + motocycle.id);
+          // console.log('this now :' + comment.id);
+          //res.send('this is going to be reply!');
+          // console.log(res.locals);
+          // console.log(comment);
+          res.render('replies/new', { comment: comment, motocycle: motocycle });
+        }
+      });
+    }
+  });
+});
 
-//         if (comment.author.id.equals(req.user._id)) {
-//           next();
-//         } else {
-//           res.redirect('back');
-//         }
-//       }
-//     });
-//   } else {
-//     res.redirect('back');
-//     // console.log('You need to be logged in to do that');
-//     // res.send('You need to be logged in to do that');
-//   }
-// }
+//reply post route
+
+router.post('/:comment_id/replies', middleware.isLoggedIn, (req, res) => {
+  Comment.findById(req.params.comment_id, (err, comment) => {
+    // console.log('whereami: ' + comment);
+
+    if (err) {
+      console.log(err);
+      res.redirect('back');
+    } else {
+      console.log(comment);
+      console.log(req.user._id);
+
+      Reply.create(req.body.reply, (err, reply) => {
+        if (err) {
+          req.flash('error', 'Something went wrong!');
+
+          console.log(err);
+        } else {
+          //add username and id to comment  HERE ALSo A BIG ONE - SPREAD =...
+          reply.author.id = req.user._id;
+          reply.author.username = req.user.username;
+          reply.save();
+          comment.replies.push(reply);
+          comment.save();
+          res.redirect('/motocycles/' + req.params.id);
+        }
+      });
+    }
+  });
+});
+
+// reply edit route
+router.get('/:comment_id/replies/:reply_id/edit', middleware.isLoggedIn, (req, res) => {
+  //res.send('this is the path to there');
+  Motocycle.findById(req.params.id, (err, motocycle) => {
+    if (err) {
+      console.log(err);
+      res.redirect('back');
+    } else {
+      console.log('5bfae5db280fbb0a85dbd0c8 =' + motocycle.id);
+      // }
+      Comment.findById(req.params.comment_id, (err, comment) => {
+        if (err) {
+          console.log(err);
+          res.redirect('back');
+        } else {
+          console.log('this is again maybe :' + motocycle.id);
+          console.log('this now :' + comment.id);
+          Reply.findById(req.params.reply_id, (err, reply) => {
+            if(err) {
+              console.log(err);
+              res.redirect('back');
+            } else {
+              console.log('Reply ID:::' + reply.id);
+              res.render('replies/edit', { reply:reply, comment_id: req.params.comment_id, motocycle_id: req.params.id });
+            }
+          })
+        }
+      });
+    }
+  });
+});
+
+// reply update route
+router.put('/:comment_id/replies/:reply_id', middleware.isCommentOwner, (req, res) => {
+  Reply.findByIdAndUpdate(
+    req.params.reply_id,
+    req.body.reply,
+    (err, reply) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        res.redirect('/motocycles/' + req.params.id);
+      }
+    }
+  );
+});
+// TODO: Reply Destroy route - once when I have interface
+
 
 module.exports = router;

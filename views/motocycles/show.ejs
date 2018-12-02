@@ -110,7 +110,7 @@
           </strong>
 
           <!--Show when the comment was made-->
-          <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+          <span class="pull-right"><%= moment(comment.created).fromNow() %></span>
 
           <!--Printing the comment-->
           <p><%= comment.text %></p>
@@ -127,6 +127,8 @@
       <form id="delete-form" action="/motocycles/<%= motocycle._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" style="display: inline;">
         <button class="btn btn-xs btn-danger">Delete</button>
       </form>
+
+      
 
        <!--Edit comment form-->
             <div class="collapse" id="collapseEdit<%= comment._id %>">
@@ -146,10 +148,68 @@
               </div>
             </div>
               <% } %>
-            <hr>
+            <!-- END OF COMMENT CHECK -- STILL IN COMMENT FOREACH LOOP-->
+              <% if (currentUser){ %>
+                
+              <a class="btn btn-xs btn-info" role="button" data-toggle="collapse" href="#collapseReply<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">
+                Reply</a>
+           
           </div>
+          <!-- CLOSING DIV FOR A SINGLE COMMENT -->
         </div>
-          <% }) %>
+        
+          <hr>
+        <!-- ovdje jedan div da sve smanji -->
+        <div class="container" style="background-color:aqua">
+<!--Reply section title-->
+
+
+       
+               
+                 
+
+              </div>
+
+
+
+              
+               
+              <!-- end of check if there is an user         -->
+                    <% } %>
+                    <h4><strong><%=comment.replies.length%> replies <span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"></span></strong></h4>
+                    <ul>
+                        
+                        <%comment.replies.forEach(function(reply){%>
+                          <li>
+                             <a href="/users/<%= reply.author.id %>"><%=reply.author.username %> </a> replied - <%=reply.text %> <%= moment(reply.created).fromNow() %></br>
+                          </li>
+                          <%})%>
+                      </ul>
+  <!-- reply form -->
+                <!--Edit reply form-->
+                <% if (currentUser){ %>
+                <div class="collapse" id="collapseReply<%= comment._id %>">
+                    <div class="well" style="border-left: 5px solid #ffbb33; margin-top: 15px;">
+                      <h4>Add your reply <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></h4>
+                      
+                      <form id="add-reply-form<%= comment._id %>" action="/motocycles/<%=motocycle._id %>/comments/<%=comment._id %>/replies" method="POST">
+                        <div class="form-group">
+                          <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                        </div>
+                        <div class="form-group">
+                          <textarea class="form-control" name='reply[text]'  form="add-reply-form<%= comment._id %>" rows="5" cols="70"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <button class="btn btn-info btn-sm"> Reply <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                   <% } %>  
+                      <hr>     
+                    <!-- end of comments forEach loop -->
+            <% }) %>          
+          </div>
       </div>
 <!--COMMENT SECTION END-->
 

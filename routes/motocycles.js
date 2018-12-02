@@ -120,7 +120,15 @@ router.get('/new', middleware.isLoggedIn, (req, res) => {
 router.get('/:id', (req, res) => {
   //find the moto with the id and associate with comments
   Motocycle.findById(req.params.id)
-    .populate('comments')
+    .populate({
+      path: 'comments',
+      // model: 'Comment',
+      //this is to get a replies on the page
+      populate: {
+        path: 'replies'
+        // model: 'Reply'
+      }
+    })
     .exec((err, motocycle) => {
       if (err) {
         console.log(err);
