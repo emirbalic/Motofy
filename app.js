@@ -20,7 +20,8 @@ var commentRoutes = require('./routes/comments'),
   indexRoutes = require('./routes/index');
 
 mongoose.connect(
-  'mongodb://bakke:bakke2000@ds161653.mlab.com:61653/motofy',
+  'MONGODB_PASSWORD',
+
   { useNewUrlParser: true }
 );
 //this line is here only to get rid of 
@@ -55,12 +56,30 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Middleware for all routes in order to be accessible user.id - ex. to use the header.ejs ()
-app.use((req, res, next) => {
+// app.use((req, res, next) => {
+//   res.locals.currentUser = req.user;
+//   res.locals.error = req.flash('error');
+//   res.locals.success = req.flash('success');
+//   next();
+// });
+
+// New version updated for Notifications and with async functions
+app.use(async function(req, res, next){
   res.locals.currentUser = req.user;
-  res.locals.error = req.flash('error');
-  res.locals.success = req.flash('success');
+  // console.log(req.user);
+  if(req.user) {
+   try {
+     let user = await User.findById(req.user._id).populate('notifications', null, { isRead: false }).exec();
+     res.locals.notifications = user.notifications.reverse();
+   } catch(err) {
+     console.log(err.message);
+   }
+  }
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   next();
 });
+
 
 app.locals.moment = require('moment');
 

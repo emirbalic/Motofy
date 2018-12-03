@@ -1,5 +1,5 @@
 <% include ../partials/header %>
-
+<% var followsAlready, sameUser%>
 <!-- <h1>User Page <%= user.firstname%></h1> -->
 <div class="container">
 
@@ -10,10 +10,20 @@
           <img src="<%= user.avatar %>" alt="Profile picture" />
         </div>
         <div class="caption pull-right">
-          <p>
-            Send an email to
-            <a href="mailto:<%= user.email%>"><%= user.username%></a>
-          </p>
+
+
+          <% if( (currentUser && !sameUser && !followsAlready) ) {%>
+              <a href="/follow/<%= user.id %>"><button class="btn btn-primary">Follow <%= user.username %></button></a>
+              </p>
+              Send an email to
+              <a href="mailto:<%= user.email%>">
+                <%= user.username%></a>
+               
+                <% } else if( (currentUser && !sameUser && followsAlready) ) {%>
+                <a href="/follow/<%= user.id %>"><button class="btn btn-primary">Unfollow <%= user.username %></button></a>
+              </p>
+                <% }%>
+                <%= sameUser%>
         </div>
       </div>
       <div class="col-md-8">

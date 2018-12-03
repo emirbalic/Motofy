@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var Motocycle = require('../models/motocycle');
+var User = require('../models/user');
+var Notification = require("../models/notification");
+
 var middleware = require('../middleware/');
 //request
 
@@ -89,9 +92,9 @@ router.get('/', (req, res) => {
 });
 
 // CREATE - add new motorcycle to database
-router.post('/', middleware.isLoggedIn, upload.single('image'), function(req, res) {
+router.post('/', middleware.isLoggedIn, upload.single('image'), async function(req, res) {
   //console.log(cloudinary.config);//file. req.file
-  cloudinary.uploader.upload(req.file.path, function(result) {
+  cloudinary.uploader.upload(req.file.path, async function(result) {
     // getting the cloudinary url for the image to the motocycle object under image property
     req.body.motocycle.image = result.secure_url;
     // add image's public_id to motocycle object
@@ -101,15 +104,95 @@ router.post('/', middleware.isLoggedIn, upload.single('image'), function(req, re
       id: req.user._id,
       username: req.user.username
     };
-    Motocycle.create(req.body.motocycle, function(err, motocycle) {
-      if (err) {
-        req.flash('error', err.message);
-        return res.redirect('back');
-      }
-      res.redirect('/motocycles/' + motocycle.id);
-    });
+
+    var newMotocycle = req.body.motocycle;
+
+      try {
+    let motocycle = await Motocycle.create(newMotocycle);
+    let user = await User.findById(req.user._id).populate('followers').exec();
+    let newNotification = {
+      username: req.user.username,
+      motocycleId: motocycle.id
+      
+    }
+    // console.log(newNotification);
+
+    for(const follower of user.followers) {
+      let notification = await Notification.create(newNotification);
+      follower.notifications.push(notification);
+      follower.save();
+    }
+        //redirect back to campgrounds page
+    res.redirect(`/motocycles/${motocycle.id}`);
+  } catch(err) {
+    req.flash('error', err.message);
+    res.redirect('back');
+  }
+
+
+
+    // Motocycle.create(req.body.motocycle, async function(err, motocycle) {
+    //   if (err) {
+    //     req.flash('error', err.message);
+    //     return res.redirect('back');
+    //   }
+    //   User.findById(req.user._id).populate('followers').exec();
+    //   let newNotification = {
+    //     username: req.user.username,
+    //     motocycleId: motocycle.id
+    //   }
+    //   for(const follower of user.followers) {
+    //     let notification = await Notification.create(newNotification);
+    //     follower.notifications.push(notification);
+    //     follower.save();
+    //   }
+    //   res.redirect('/motocycles/' + motocycle.id);
+    // });
   });
 });
+
+
+// //CREATE - add new campground to DB
+// router.post("/", middleware.isLoggedIn, async function(req, res){
+//   // get data from form and add to campgrounds array
+//   var name = req.body.name;
+//   var image = req.body.image;
+//   var desc = req.body.description;
+//   var author = {
+//       id: req.user._id,
+//       username: req.user.username
+//   }
+//   var newCampground = {name: name, image: image, description: desc, author:author}
+
+//   try {
+//     let campground = await Campground.create(newCampground);
+//     let user = await User.findById(req.user._id).populate('followers').exec();
+//     let newNotification = {
+//       username: req.user.username,
+//       campgroundId: campground.id
+//     }
+//     for(const follower of user.followers) {
+//       let notification = await Notification.create(newNotification);
+//       follower.notifications.push(notification);
+//       follower.save();
+//     }
+
+//     //redirect back to campgrounds page
+//     res.redirect(`/campgrounds/${campground.id}`);
+//   } catch(err) {
+//     req.flash('error', err.message);
+//     res.redirect('back');
+//   }
+// });
+
+
+
+
+
+
+
+
+
 
 // NEW - show form to add motocycles
 router.get('/new', middleware.isLoggedIn, (req, res) => {
