@@ -231,7 +231,11 @@ router.get('/logout', (req, res) => {
   res.redirect('/motocycles');
 });
 
-
+// Users all
+router.get('/users', (req, res) => {
+  // res.send("Welcome to users all");
+  res.render('../views/users');
+})
 
 // USER Profile
 router.get('/users/:id', (req, res) => {

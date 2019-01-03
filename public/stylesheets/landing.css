@@ -104,3 +104,30 @@ body {
 .no-cssanimations .slideshow li {
   opacity: 1;
 }
+
+.btn-landing {
+  background: transparent;
+  border: 2px solid rgba(241, 162, 43, 0.904);
+  color: rgba(241, 162, 43, 0.904);
+}
+
+.btn-landing:hover {
+  color: white;
+  background: transparent;
+  border-color: white;
+  /* border-color: #adadad; */
+}
+
+.input-landing {
+  background: transparent;
+    border: 2px solid rgba(241, 162, 43, 0.904);
+    color: rgba(241, 162, 43, 0.904);
+}
+
+input.input-landing:active {
+  border: 2px solid white;
+}
+
+#landing-header h3:hover {
+  color: white;
+} 

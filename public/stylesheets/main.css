@@ -3,15 +3,19 @@ html {
   height: 100%;
   margin: 0;
   /* font-family: Lato; */
-  background-color:rgb(53, 104, 105);
+  /* background-color:rgb(53, 104, 105); */
+  background-color: black;
 }
 .navbar {
   margin: 0;
   padding: 0;
 }
-
+/* .container {
+  background: black;
+} */
 header.jumbotron {
-  background-color: rgb(145, 134, 155);
+  /* background-color: rgb(145, 134, 155); */
+  background: rgba(241, 162, 43, 0.904);
   /* move down from navbar */
   margin-top: 20px;
 }
@@ -44,9 +48,34 @@ header.jumbotron {
   display: inline;
 }
 
-
+.navbar-header,
+.navbar-collapse, 
+.navbar-brand, 
+.navbar-toggle,
+.sr-only,
+.container-fluid {
+  background: rgba(241, 162, 43, 0.904);
+}
 
 /* not working!! */
 .activeItem {
   background-color:#ff00a540;
+}
+
+.btn-black {
+  background: black;
+  color: rgba(241, 162, 43, 0.904);
+}
+
+.btn-black:hover {
+  color:white;
+}
+
+/* .alert-danger,
+.alert-success {
+  margin-bottom: 0;
+} */
+
+.alert {
+  margin-bottom: 0;
 }

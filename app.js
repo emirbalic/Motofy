@@ -17,9 +17,13 @@ var express = require('express'),
 // require routes
 var commentRoutes = require('./routes/comments'),
   motocycleRoutes = require('./routes/motocycles'),
-  indexRoutes = require('./routes/index');
+  indexRoutes = require('./routes/index'),
+  forumRoutes = require('./routes/forums');
+  eventRoutes = require('./routes/events');
+
 
 mongoose.connect(
+
   'MONGODB_PASSWORD',
 
   { useNewUrlParser: true }
@@ -86,6 +90,8 @@ app.locals.moment = require('moment');
 app.use(indexRoutes);
 app.use('/motocycles/:id/comments', commentRoutes);
 app.use('/motocycles', motocycleRoutes);
+app.use('/events', eventRoutes);
+app.use('/forums', forumRoutes);
 
 app.listen(3000, () => {
   console.log('Il server è in ascolto');
