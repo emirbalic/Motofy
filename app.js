@@ -24,7 +24,7 @@ var commentRoutes = require('./routes/comments'),
 
 mongoose.connect(
 
-  'MONGODB_PASSWORD',
+  // 'MONGODB_PASSWORD',
 
   { useNewUrlParser: true }
 );

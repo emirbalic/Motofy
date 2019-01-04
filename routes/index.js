@@ -232,9 +232,26 @@ router.get('/logout', (req, res) => {
 });
 
 // Users all
+
+// users = [
+//   emir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
+//   amir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
+//   umir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
+//   imir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
+//   lmir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
+//   dmir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
+//   kmir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
+//   omir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'})
+// ];
+
 router.get('/users', (req, res) => {
-  // res.send("Welcome to users all");
-  res.render('../views/users');
+  User.find((err, users) => {
+    if(err) {
+      console.log('There is an error fuckit');
+    } else {
+      res.render('../views/users', {users:users});
+    }
+  })
 })
 
 // USER Profile

@@ -10,6 +10,16 @@ var userSchema = new mongoose.Schema({
   firstname: String,
   lastname: String,
   email: {type: String, unique: true, required: true},
+  //added city and country
+  city: String,
+  country: String,
+  // maybe birthday and registration as well
+  dob: Date,
+  dateOfRegistration:{
+    type: Date,
+    default: Date.now
+  },
+  //
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   about: String,

@@ -1,5 +1,30 @@
 <% include ../partials/header %>
 <h1>Welcome to users page!!!!</h1>
+<div class="container">
+  <div class="row">
+    <div class="row text-center" style="display:flex; flex-wrap:wrap">
+        <% users.forEach(user => { %>
+        <div class="col-md-2 col-sm-3">
+            <div class="thumbnail">
+                <a href="/users/<%=user._id%>">
+                    <div class="caption">
+                    <!-- <a href=""></a> -->
+                    <img src="<%=user.avatar%>" 
+                    alt="photo" 
+                    style="width:5em; height:5em"/>
+                    <h3><%=user.username%></h3>
+                    <h5><%=user.firstname%></h5>
+                    <h5><%=user.lastname%></h5>
+                    <h5>Italy</h5>
+                    <h5>Rome</h5>
+                </a>
+                <!-- <h3><%=user.city%></h3>
+                <h3><%=user.country%></h3> -->
+                </div>
+            </div>
+        </div> 
+        <% }) %>       
+    </div>
+  </div>
+</div>
 <% include ../partials/footer %>
-
-
