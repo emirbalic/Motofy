@@ -1,40 +1,54 @@
 <% include ../partials/header %>
-<h1>EVENTS PAGE</h1>
 <div class="container">
     <div class="row">
-        <div class="col-md-12 col-sm-12">
-                <% events.forEach(event => { %>
-                <!-- <div class="media"> -->
+        <div class="col-md-1 col-sm-1 pull-left">
+            <p>
+                    <a class="btn btn-warning pull-left" href="events/new">Create a New Event</a>
+            </p>
+        </div>
+        <div class="col-md-10 col-sm-10 pull-right">
+                
+            <% events.forEach(event => { %>
+            <!-- <div class="media"> -->
 
-                        <ul class="list-unstyled">
-                            <li class="media">
-                                <img src="<%=event.image%>" class="mr-3" alt="image">
-                                <div class="media-body">
-                                <h5 class="mt-0 mb-1">Description</h5>
-                                <%=event.description%>
-                                </div>
-                            </li>
-                        </ul>
-                        <!-- <img src="<%=event.image%>" class="mr-3" alt="image"> -->
-                        <!-- <img src="https://res-console.cloudinary.com/motofy/thumbnails/v1/image/upload/v1543859124/cXdnOGI5eGQ0ejFoOW56anZ1emk=/grid>" class="mr-3" alt="image">
+            <ul class="list-unstyled ul-Events">
+                <li class="media eventlist">
+                    <!-- <div class="thumbnail"> -->
+                    <img src="<%=event.image%>" class="mr-3 eventImage pull-left" alt="image">
+                    <!-- </div> -->
+                    <div class="media-body">
+                    <h5 class="mt-0 mb-1">Name: <%=event.name%></h5>
+                    <h5 class="mt-0 mb-1">Location: <%=event.location%>, <%=event.city%>, <%=event.country%></h5>
+                    <!-- Will leave this one when change datepicker to feed the moment. NB: also change the model -->
+                    <!-- <h5 class="mt-0 mb-1">On: <%=moment(event.date).format( 'MMM-DD-YYYY')%>, Begins at: <%=moment(event.startTime).format('HH.mm')%>, Ends at: <%=moment(event.endTime).format('HH.mm')%></h5> -->
+                    <h5 class="mt-0 mb-1">On: <%=moment(event.date).format( 'MMM-DD-YYYY')%>, Begins at: <%=event.startTime%>, Ends at: <%=event.endTime%></h5>
+                    <h5 class="mt-0 mb-1">Description:</h5>
+                    <h5>
+                        <%=event.description%>
+                    </h5>
+                    </div>
+                </li>
+            </ul>
+                    <!-- <img src="<%=event.image%>" class="mr-3" alt="image"> -->
+                    <!-- <img src="https://res-console.cloudinary.com/motofy/thumbnails/v1/image/upload/v1543859124/cXdnOGI5eGQ0ejFoOW56anZ1emk=/grid>" class="mr-3" alt="image">
 
+                    <div class="media-body">
+                        <h5 class="mt-0">Name</h5>
+                        <%=event.name%>
+                        <div class="media mt-3">
+                            <h3><strong><%=event.city%></strong></h3>
+                            <h3><strong><%=event.location%></strong></h3>
                         <div class="media-body">
-                          <h5 class="mt-0">Name</h5>
-                          <%=event.name%>
-                          <div class="media mt-3">
-                                <h3><strong><%=event.city%></strong></h3>
-                                <h3><strong><%=event.location%></strong></h3>
-                            <div class="media-body">
-                              <h5 class="mt-0">Media heading</h5>
-                              <%=event.description%>
-                            </div>
-                          </div>
+                            <h5 class="mt-0">Media heading</h5>
+                            <%=event.description%>
                         </div>
-                      </div> -->
-                    
-                    
+                        </div>
+                    </div>
+                    </div> -->
+                
+                
 
-                    <% }) %>       
+            <% }) %>       
         </div> 
     </div>
 </div>

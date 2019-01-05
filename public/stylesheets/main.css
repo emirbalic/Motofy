@@ -79,3 +79,25 @@ header.jumbotron {
 .alert {
   margin-bottom: 0;
 }
+
+
+/* events  */
+.eventlist {
+  border: 1px solid wheat;
+}
+.eventImage {
+  width: 150px;
+  margin: 15px 10px;
+}
+
+.media-body h5 {
+  color: wheat;
+}
+
+.ul-Events {
+  margin-top: 20px;
+}
+
+a.btn {
+  margin-top: 30px;
+}

@@ -1,0 +1,128 @@
+<% include ../partials/header %>
+
+<div class="container">
+  <div class="row">
+      <!-- enctype = allows fileupload feature -->
+    <h1 style="text-align:center">Create a new event!</h1>
+    <div style="width: 30%; margin: 40px  auto">
+            <!-- enctype="multipart/form-data"  prop of the label - accept="image/*"-->
+      <form action="/events" method="POST"> 
+        <!-- <div class="form-group">
+            <label for="image"> Image </label>
+            <input
+            class="form-control"
+            type="file"
+            title=" "
+            id="image"
+            name="image"
+            required
+            />
+        </div> -->
+        <div class="form-group">
+            <input
+                class="form-control"
+                type="text"
+                name="image"
+                placeholder="Image"
+            />
+              </div>
+        <div class="form-group">
+          <input
+            class="form-control"
+            type="text"
+            name="name"
+            required
+            placeholder="Name"
+          />
+        </div>
+       <div class="form-group">
+            <input
+                class="form-control"
+                type="text"
+                name="date"
+                required
+                placeholder="Date"
+                onfocus="(this.type='date')"
+            />
+        </div>
+         <div class="form-group">
+          <input
+            class="form-control"
+            type="text"
+            name="startTime"
+            required
+            placeholder="Starting time"
+            onfocus="(this.type='time')"
+          />
+        </div>
+       <div class="form-group">
+            <input
+                class="form-control"
+                type="text"
+                name="endTime"
+                placeholder="Ending time"
+                onfocus="(this.type='time')"
+            />
+        </div>
+            
+             <div class="form-group">
+                <input
+                class="form-control"
+                type="number"
+                name="entranceFee"
+                min="1"
+                step="1"
+                placeholder="Entrance Fee"
+                />
+            </div>
+            <div class="form-group">
+                <input
+                class="form-control"
+                type="text"
+                name="location"
+                required
+                placeholder="Location"
+                />
+            </div>
+            <div class="form-group">
+                <input
+                class="form-control"
+                type="text"
+                name="city"
+                placeholder="City"
+                />
+            </div>
+            <div class="form-group">
+                <select name="country" class="form-control">
+                    <option>Country</option>
+                        <% countryList.getData().forEach(function (country) { %>
+                        <option value="<%= country.name %>"> <%= country.name %> 
+                        <% }) %>
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea
+                maxlength="300"
+                class="input form-control"
+                class="form-control"
+                type="text"
+                required
+                name="description"
+                placeholder="Describe your events in 300 characters"
+          ></textarea> 
+        </div>
+        <div class="form-group">
+          <button
+            class="btn btn-lg btn-default btn-block"
+            type="submit">
+            Submit
+          </button>
+        </div>
+      </form> 
+      <a href="/events">Back</a>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>

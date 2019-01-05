@@ -269,7 +269,7 @@ router.get('/logout', (req, res) => {
 router.get('/users', (req, res) => {
   User.find((err, users) => {
     if(err) {
-      console.log('There is an error fuckit');
+      console.log('There is an error');
     } else {
       res.render('../views/users', {users:users});
     }
