@@ -1,3 +1,42 @@
 <% include ../partials/header %>
-<h1>Welcome to EVENTS page!!!!</h1>
+<h1>EVENTS PAGE</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+                <% events.forEach(event => { %>
+                <!-- <div class="media"> -->
+
+                        <ul class="list-unstyled">
+                            <li class="media">
+                                <img src="<%=event.image%>" class="mr-3" alt="image">
+                                <div class="media-body">
+                                <h5 class="mt-0 mb-1">Description</h5>
+                                <%=event.description%>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- <img src="<%=event.image%>" class="mr-3" alt="image"> -->
+                        <!-- <img src="https://res-console.cloudinary.com/motofy/thumbnails/v1/image/upload/v1543859124/cXdnOGI5eGQ0ejFoOW56anZ1emk=/grid>" class="mr-3" alt="image">
+
+                        <div class="media-body">
+                          <h5 class="mt-0">Name</h5>
+                          <%=event.name%>
+                          <div class="media mt-3">
+                                <h3><strong><%=event.city%></strong></h3>
+                                <h3><strong><%=event.location%></strong></h3>
+                            <div class="media-body">
+                              <h5 class="mt-0">Media heading</h5>
+                              <%=event.description%>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                    
+                    
+
+                    <% }) %>       
+        </div> 
+    </div>
+</div>
+
 <% include ../partials/footer %>

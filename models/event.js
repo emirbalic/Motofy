@@ -1,14 +1,14 @@
 var mongoose = require('mongoose');
 
 var eventSchema = new mongoose.Schema ({
-    eventname: string,
+    eventname: String,
     startTime: Date,
     endTime: Date,
-    location: string,
-    city: string,
-    country: string,
-    description: string,
-    image: string,
+    location: String,
+    city: String,
+    country: String,
+    description: String,
+    image: String,
     attending: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

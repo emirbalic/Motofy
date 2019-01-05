@@ -8,8 +8,35 @@ var nodemailer = require('nodemailer');
 var crypto = require('crypto');
 var middleware = require('../middleware/');
 var Notification = require('../models/notification');
+const countryList = require('country-list');
 var { isLoggedIn } = require('../middleware'); // try this please as well
 
+//image upload to cloudinary
+
+// var multer = require('multer');
+// var storage = multer.diskStorage({
+//   filename: function(req, file, callback) {
+//     callback(null, Date.now() + file.originalname);
+//   }
+// });
+// var imageFilter = function (req, file, cb) {
+//     // accept image files only
+//     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+//         return cb(new Error('Only image files are allowed!'), false);
+//     }
+//     cb(null, true);
+// };
+// var upload = multer({ storage: storage, fileFilter: imageFilter})
+
+// var cloudinary = require('cloudinary');
+// cloudinary.config({ 
+
+//   // cloud_name: 'motofy',
+//   // api_key: process.env.CLOUDINARY_API_KEY,
+//   // api_secret: process.env.CLOUDINARY_API_SECRET
+// });
+
+// const { getCode, getName } = require('country-list');
 
 // Root route
 router.get('/', (req, res) => {
@@ -18,8 +45,9 @@ router.get('/', (req, res) => {
 
 // show registration form
 router.get('/register', (req, res) => {
-  res.render('register');
+  res.render('register', {countryList:countryList});
 });
+
 
 // handle sign up logic
 router.post('/register', (req, res) => {
@@ -29,8 +57,13 @@ router.post('/register', (req, res) => {
     lastname: req.body.lastname,
     email: req.body.email,
     avatar: req.body.avatar,
-    about: req.body.about
+    about: req.body.about,
+    city: req.body.city,
+    country: req.body.country,
+    dob:req.body.dob
   }); //, isAdmin: admincode
+  // console.log(req.body.dob);
+
   if (req.body.admincode === '1234') {
     newUser.isAdmin = true;
   }
@@ -232,17 +265,6 @@ router.get('/logout', (req, res) => {
 });
 
 // Users all
-
-// users = [
-//   emir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
-//   amir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
-//   umir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
-//   imir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
-//   lmir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
-//   dmir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
-//   kmir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'}),
-//   omir = new User({firstname:'emir', username:'bakke', avatar:'http://alexsears.com/assets/img/alexsears.jpg'})
-// ];
 
 router.get('/users', (req, res) => {
   User.find((err, users) => {

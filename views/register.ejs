@@ -18,7 +18,7 @@
             class="form-control"
             type="text"
             name="username"
-            placeholder="username"
+            placeholder="Username"
           />
         </div>
 
@@ -27,7 +27,7 @@
             class="form-control"
             type="text"
             name="avatar"
-            placeholder="avatar"
+            placeholder="Profile pic"
           />
         </div>
 
@@ -36,7 +36,7 @@
             class="form-control"
             type="text"
             name="firstname"
-            placeholder="firstname"
+            placeholder="First Name"
           />
         </div>
 
@@ -45,8 +45,37 @@
             class="form-control"
             type="text"
             name="lastname"
-            placeholder="lastname"
+            placeholder="Last Name"
           />
+        </div>
+
+        <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="dob"
+              onfocus="(this.type='date')"
+              placeholder="Date of birth"
+            />
+          </div>
+          <!-- <input placeholder="Date" class="textbox-n" type="text" onfocus="(this.type='date')"  id="date"> -->
+        <div class="form-group">
+          <input
+            class="form-control"
+            type="text"
+            name="city"
+            placeholder="City"
+          />
+        </div>
+
+        <div class="form-group">
+          <select name="country" class="form-control">
+            <option>Country</option>
+              <% countryList.getData().forEach(function (country) { %>
+              <option value="<%= country.name %>"> <%= country.name %> 
+              <% }) %>
+            </option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -54,7 +83,7 @@
             class="form-control"
             type="email"
             name="email"
-            placeholder="email"
+            placeholder="Email"
           />
         </div>
 
@@ -63,7 +92,7 @@
             class="form-control"
             type="password"
             name="password"
-            placeholder="password"
+            placeholder="Password"
           />
         </div>
         <div class="form-group">
@@ -97,5 +126,4 @@
     </div>
   </div>
 </div>
-
 <% include ./partials/footer %>
