@@ -2,9 +2,22 @@
 <div class="container">
     <div class="row">
         <div class="col-md-1 col-sm-1 pull-left">
-            <p>
-                    <a class="btn btn-warning pull-left" href="events/new">Create a New Event</a>
-            </p>
+            <div class="eventsLeft">
+                    <%let counter = 0; %>
+                <% for (i=0; i < events.length; i++) { %>
+                    <% if(events[i].attending && events[i].attending.length) { %>
+                        <% events[i].attending.forEach(attend => {  %>
+                            <% counter++; %>
+                        <% })  %>
+                        <% }  %>
+                <% } %>
+
+                <p> <%= counter %> people are going or went to <%=events.length%> events</p>
+                <!-- <p>200 poeple interested</p> -->
+            </div>
+                <% if(currentUser) { %>
+            <p><a class="btn btn-warning pull-left" href="events/new">Create a New Event</a></p>
+                <% }%>
         </div>
         <div class="col-md-10 col-sm-10 pull-right">
                 
@@ -17,37 +30,77 @@
                     <img src="<%=event.image%>" class="mr-3 eventImage pull-left" alt="image">
                     <!-- </div> -->
                     <div class="media-body">
-                    <h5 class="mt-0 mb-1">Name: <%=event.name%></h5>
+                    <h5 class="mt-0 mb-1">Name: <%=event.eventname%></h5>
                     <h5 class="mt-0 mb-1">Location: <%=event.location%>, <%=event.city%>, <%=event.country%></h5>
                     <!-- Will leave this one when change datepicker to feed the moment. NB: also change the model -->
                     <!-- <h5 class="mt-0 mb-1">On: <%=moment(event.date).format( 'MMM-DD-YYYY')%>, Begins at: <%=moment(event.startTime).format('HH.mm')%>, Ends at: <%=moment(event.endTime).format('HH.mm')%></h5> -->
                     <h5 class="mt-0 mb-1">On: <%=moment(event.date).format( 'MMM-DD-YYYY')%>, Begins at: <%=event.startTime%>, Ends at: <%=event.endTime%></h5>
+                    <%if(event.entranceFee!=null) { %>
+                       <h5>Entrance fee: <%=event.entranceFee%></h5> 
+                    <% } else {%>
+                        <h5>FREE ENTRANCE</h5> 
+                    <% } %>
                     <h5 class="mt-0 mb-1">Description:</h5>
                     <h5>
                         <%=event.description%>
                     </h5>
+                    <!-- <h5 class="mt-0 mb-1">ID:</h5> -->
+                    <%if(event.attending.length > 1) { %>
+                        <h5><%=event.attending.length%> members are going</h5>
+                    <% } else if(event.attending.length == 1 && event.attending.length != 0) { %>%>
+                        <h5><%=event.attending.length%> member is going</h5>
+                        <% } %>
                     </div>
+
+                  <!-- outputting the 'attending' button  -->
+                  <%if(currentUser) { %>
+                     <!-- declare lets -->
+                     <!-- <% let going; %> not sure needed but let it be here for a while--> 
+                     <% let wannago; %>
+                     <% let nofolks; %>
+
+                    <% if(event.attending && event.attending.length) {%>
+                        <%  nofolks = false; %>
+                        <!-- <h4>Ima raje</h4> -->
+
+                   
+
+                         <!-- loop the array -->
+                        <% for (i=0; i < event.attending.length; i++ ){%>
+                          
+                            <!-- check if in array -->
+                            <% if(event.attending[i].equals((currentUser.id))) {%>
+                                <!-- <%  going = true; %> -->
+                                <%  wannago = false; %>
+                                <!-- <h5>Ovaj user ide!!</h5>
+                                <p><a class="btn btn-warning btn-event" href="">Going</a></p> -->
+                            <% break; } else {%>
+                                <!-- <%  going = false; %> -->
+                                <%  wannago = true; %>
+                                <!-- <h5>Ovaj user ne ide</h5> -->
+                                <% } %>
+                        <%}%>
+
+
+                    <% } else {%>
+                        <!-- <p><a class="btn btn-warning btn-event" href="events/<%= event._id %>">Wanna Go?</a></p> -->
+                        <%  nofolks = true; %>
+                        <!-- <h4>Nema raje</h4> -->
+                        <% } %>
+
+                        <% if(wannago || nofolks) { %>
+                            <p><a class="btn btn-warning btn-event" href="events/<%= event._id %>">Wanna Go?</a></p>
+                        <% } else if (!wannago){%>
+                            <p><a class="btn btn-warning btn-event" href=""> Going </a></p> 
+                            <% } %>
+                <!-- end currentUser -->
+               <% } %>                  
                 </li>
+                <h5>
+                   
+                    <em>Created by: <a class="userlink" href="/users/<%= event.author.id %>"><%=event.author.username %> </a></em>
+                </h5>
             </ul>
-                    <!-- <img src="<%=event.image%>" class="mr-3" alt="image"> -->
-                    <!-- <img src="https://res-console.cloudinary.com/motofy/thumbnails/v1/image/upload/v1543859124/cXdnOGI5eGQ0ejFoOW56anZ1emk=/grid>" class="mr-3" alt="image">
-
-                    <div class="media-body">
-                        <h5 class="mt-0">Name</h5>
-                        <%=event.name%>
-                        <div class="media mt-3">
-                            <h3><strong><%=event.city%></strong></h3>
-                            <h3><strong><%=event.location%></strong></h3>
-                        <div class="media-body">
-                            <h5 class="mt-0">Media heading</h5>
-                            <%=event.description%>
-                        </div>
-                        </div>
-                    </div>
-                    </div> -->
-                
-                
-
             <% }) %>       
         </div> 
     </div>

@@ -28,3 +28,49 @@
   });
 
   2 - next
+
+
+
+
+// var events = [
+//   {
+//     name: 'Motorace',
+//     date: Date.now(),
+//     startTime: Date.now(),
+//     endTime: Date.now(),
+//     location: 'Racing Field',
+//     city: 'Napoli',
+//     country: 'Italy',
+//     description:
+//       'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+//     image:
+//       'https://images.onepixel.com/bead1270-926c-4bc4-01fc-b16f48d3ab51_1000.jpg?auto=format&q=55&mark=watermark%2Fcenter-v5.png&markalign=center%2Cmiddle&h=364&markalpha=20&s=bf0785789e36980d0bd4f70d605ab979'
+//   },
+//   {
+//     name: 'CARS',
+//     date: Date.now(),
+//     startTime: Date.now(),
+//     endTime: Date.now(),
+//     location: 'Collosseo',
+//     city: 'Rome',
+//     country: 'Italy',
+//     description:
+//       'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+//     image:
+//       'https://images.onepixel.com/bead1270-926c-4bc4-01fc-b16f48d3ab51_1000.jpg?auto=format&q=55&mark=watermark%2Fcenter-v5.png&markalign=center%2Cmiddle&h=364&markalpha=20&s=bf0785789e36980d0bd4f70d605ab979'
+//   },
+//   {
+//     name: 'School',
+//     date: Date.now(),
+//     startTime: Date.now(),
+//     endTime: Date.now(),
+//     location: 'Moto hills',
+//     city: 'Wienna',
+//     country: 'Austria',
+//     description:
+//       'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+//     image:
+//       'https://images.onepixel.com/bead1270-926c-4bc4-01fc-b16f48d3ab51_1000.jpg?auto=format&q=55&mark=watermark%2Fcenter-v5.png&markalign=center%2Cmiddle&h=364&markalpha=20&s=bf0785789e36980d0bd4f70d605ab979'
+//   }
+// ];
+// 

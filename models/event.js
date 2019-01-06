@@ -15,10 +15,6 @@ var eventSchema = new mongoose.Schema ({
     description: String,
     image: String,
     entranceFee: Number,
-    // author: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User'
-    // },
     author: {
     id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -26,14 +22,18 @@ var eventSchema = new mongoose.Schema ({
     },
     username: String
     },
-    attending: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    interested: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }    
+    attending: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
+    interested: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]    
 });
 
 module.exports = mongoose.model('Event', eventSchema);

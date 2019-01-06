@@ -81,7 +81,8 @@ header.jumbotron {
 }
 
 
-/* events  */
+/* EVENTS STYLING */
+
 .eventlist {
   border: 1px solid wheat;
 }
@@ -97,7 +98,36 @@ header.jumbotron {
 .ul-Events {
   margin-top: 20px;
 }
-
-a.btn {
+.btn-event {
+  margin-left: 36px;
+}
+.btn-event:hover {
+  color:greenyellow;
+  /* color:aquamarine; */
+}
+/* a.btn {
   margin-top: 30px;
+} */
+.col-md-1 p{
+  margin-top: 20px;
+  color: wheat;
+}
+
+/* used just under the event for created by section*/
+.userlink {
+  color: gray;
+  text-decoration: none;
+}
+.userlink:hover { 
+  color:rgba(241, 162, 43, 0.904); 
+  text-decoration: none;
+}
+
+
+
+
+
+/* USERS  */
+.userpic {
+  background: rgba(241, 162, 43, 0.904);
 }

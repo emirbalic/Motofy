@@ -338,7 +338,7 @@ router.get('/users/:id', (req, res) => {
   });
 });
 
-// follow user
+// GET - Follow User
 router.get('/follow/:id', middleware.isLoggedIn, async function(req, res) {
   try {
     let user = await User.findById(req.params.id);
@@ -352,7 +352,7 @@ router.get('/follow/:id', middleware.isLoggedIn, async function(req, res) {
   }
 });
 
-// view all notifications
+// GET - View All Notifications
 router.get('/notifications', isLoggedIn, async function(req, res) {
   try {
     let user = await User.findById(req.user._id)
