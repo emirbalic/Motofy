@@ -1,16 +1,26 @@
 var mongoose = require('mongoose');
 
 var forumpostSchema = new mongoose.Schema({
-    title: string,
-    content: string,
+    image: String,
+    title: String,
+    content: String,
     created: {
         type: Date,
         default: Date.now
       },
     author: {
+    id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    username: String
+    },
+    forumresponses: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Forumresponse'
+        }
+    ]
 });
 
 module.exports = mongoose.model('Forumpost', forumpostSchema);

@@ -1,3 +1,20 @@
 <% include ../partials/header %>
-<h1>Forum discussions!!!!</h1>
+<h1>Welcome to forum discussions!!!!</h1>
+<div class="container">
+    <div class="row">
+            <div class="col-md-8 col-sm-8 pull-left">
+                <%if(post.image) {%>
+                    <div class="caption">
+                        <img class="forumpic" src="<%=post.image%>" alt="image">
+                    </div>
+                <% } %>
+                <p>
+                    <h1><strong><%=post.title%></strong></h1>
+                </p>
+                <p>
+                    <h3><em><%=post.content%></em></h3>
+                </p>
+            </div>
+    </div>
+</div>
 <% include ../partials/footer %>

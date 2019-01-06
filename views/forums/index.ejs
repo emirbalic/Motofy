@@ -1,3 +1,37 @@
 <% include ../partials/header %>
-<h1>Welcome to FORUM page!!!!</h1>
+
+<div class="container">
+    <div class="row">
+            <div class="col-md-8 col-sm-8 pull-left">
+
+                    <!-- button create -->
+                    <div>
+                        <% if(currentUser) { %>
+                            <p><a class="btn btn-warning pull-left" href="forums/new">Add a New Post</a></p>
+                                <% }%>
+                    </div>
+                    <br>
+                    <%posts.forEach(post => { %>
+                        <ul class="list-unstyled ul-Events">
+                            <li class="media eventlist">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1">
+                                        <a class="userlink" href="/forums/<%=post._id%>">
+                                            Post title: <%=post.title%>
+                                        </a>
+                                    </h5>
+                                </div>
+                            </li>
+                            <h4>Created at <%=moment(post.date).format( 'MMM-DD-YYYY')%></h4>                       
+                        </ul>
+                    <% })%>
+            </div>
+            <!-- and this will be in partials -->
+            <div class="col-md-4 col-sm-4 pull-right">
+                <div class="container">
+
+                </div>
+            </div>
+    </div>
+</div>
 <% include ../partials/footer %>

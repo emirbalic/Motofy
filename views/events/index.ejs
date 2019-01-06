@@ -11,9 +11,8 @@
                         <% })  %>
                         <% }  %>
                 <% } %>
-
                 <p> <%= counter %> people are going or went to <%=events.length%> events</p>
-                <!-- <p>200 poeple interested</p> -->
+                <!-- <p>200 people interested</p> -->
             </div>
                 <% if(currentUser) { %>
             <p><a class="btn btn-warning pull-left" href="events/new">Create a New Event</a></p>
@@ -33,7 +32,6 @@
                     <h5 class="mt-0 mb-1">Name: <%=event.eventname%></h5>
                     <h5 class="mt-0 mb-1">Location: <%=event.location%>, <%=event.city%>, <%=event.country%></h5>
                     <!-- Will leave this one when change datepicker to feed the moment. NB: also change the model -->
-                    <!-- <h5 class="mt-0 mb-1">On: <%=moment(event.date).format( 'MMM-DD-YYYY')%>, Begins at: <%=moment(event.startTime).format('HH.mm')%>, Ends at: <%=moment(event.endTime).format('HH.mm')%></h5> -->
                     <h5 class="mt-0 mb-1">On: <%=moment(event.date).format( 'MMM-DD-YYYY')%>, Begins at: <%=event.startTime%>, Ends at: <%=event.endTime%></h5>
                     <%if(event.entranceFee!=null) { %>
                        <h5>Entrance fee: <%=event.entranceFee%></h5> 

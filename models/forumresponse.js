@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var forumresponseSchema = new mongoose.Schema({
-    content: string,
+    content: String,
     created: {
         type: Date,
         default: Date.now

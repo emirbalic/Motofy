@@ -1,0 +1,52 @@
+<% include ../partials/header %>
+
+<div class="container">
+  <div class="row">
+      <!-- enctype = allows fileupload feature -->
+    <h1 style="text-align:center">Create a new forum post!</h1>
+    <div style="width: 30%; margin: 40px  auto">
+            <!-- enctype="multipart/form-data"  prop of the label - accept="image/*"-->
+      <form action="/forums" method="POST"> 
+        
+        <div class="form-group">
+            <input
+                class="form-control"
+                type="text"
+                name="image"
+                placeholder="Image"
+            />
+              </div>
+        <div class="form-group">
+          <input
+            class="form-control"
+            type="text"
+            name="title"
+            required
+            placeholder="Title"
+          />
+        </div>   
+        <div class="form-group">
+            <textarea
+            maxlength="600"
+            class="input form-control"
+            class="form-control"
+            type="text"
+            required
+            name="content"
+            placeholder="Post content goes here"
+          ></textarea> 
+        </div>
+        <div class="form-group">
+          <button
+            class="btn btn-lg btn-default btn-block"
+            type="submit">
+            Submit
+          </button>
+        </div>
+      </form> 
+      <a href="/forums">Back</a>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>
