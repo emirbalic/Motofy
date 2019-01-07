@@ -7,8 +7,11 @@ var forumresponseSchema = new mongoose.Schema({
         default: Date.now
       },
     author: {
+    id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    username: String
     }
 });
 

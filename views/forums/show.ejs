@@ -2,6 +2,8 @@
 <h1>Welcome to forum discussions!!!!</h1>
 <div class="container">
     <div class="row">
+        <% if(currentUser) { %>
+
             <div class="col-md-8 col-sm-8 pull-left">
                 <%if(post.image) {%>
                     <div class="caption">
@@ -12,9 +14,24 @@
                     <h1><strong><%=post.title%></strong></h1>
                 </p>
                 <p>
+                <h1><strong>DUZINA<%=post.forumresponse._id%></strong></h1>
+                </p>
+                <p>
                     <h3><em><%=post.content%></em></h3>
                 </p>
-            </div>
+                <%if(post.forumresponse && post.forumresponse.lenght){%>
+                    <% post.forumresponse.forEach(forumresponse => { %>
+                        <ul class="list-unstyled ul-Events">
+                            <li class="media eventlist">
+                                <%= forumresponse.content %>
+                                <%= forumresponse.created %>
+                            </li>
+                        </ul>
+                    <% }) %>         
+                <% } %>
+             
+            <% } %>   
+        </div>
     </div>
 </div>
 <% include ../partials/footer %>

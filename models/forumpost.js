@@ -15,7 +15,7 @@ var forumpostSchema = new mongoose.Schema({
     },
     username: String
     },
-    forumresponses: [
+    forumresponse: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Forumresponse'
