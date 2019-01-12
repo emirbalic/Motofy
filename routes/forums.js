@@ -7,102 +7,85 @@ var middleware = require('../middleware/');
 var upload = require('../util/upload');
 var cloudinary = require('../util/cloudinary');
 
-
 // ================
 // Forumpost Routes
 // ================
-// function indexOfMax(arr) {
-//   if (arr.length === 0) {
-//       return -1;
-//   }
-
-//   var max = arr[0];
-//   var maxIndex = 0;
-
-//   for (var i = 1; i < arr.length; i++) {
-//       if (arr[i] > max) {
-//           maxIndex = i;
-//           max = arr[i];
-//       }
-//   }
-//   return maxIndex;
-// }
 
 function findIndicesOfMax(inp, count) {
   var outp = [];
   for (var i = 0; i < inp.length; i++) {
-      outp.push(i); // add index to output array
-      if (outp.length > count) {
-          outp.sort(function(a, b) { return inp[b].forumresponse.length - inp[a].forumresponse.length; }); // descending sort the output array
-          outp.pop(); // remove the last index (index of smallest element in output array)
-      }
+    outp.push(i); // add index to output array
+    if (outp.length > count) {
+      outp.sort(function(a, b) {
+        return inp[b].forumresponse.length - inp[a].forumresponse.length;
+      }); // descending sort the output array
+      outp.pop(); // remove the last index (index of smallest element in output array)
+    }
   }
   return outp;
 }
 router.get('/', (req, res) => {
-  
   ForumPost.find({})
-    .sort({ 'created': 'desc' })
-    .exec( function(err, posts) {
+    .sort({ created: 'desc' })
+    .exec(function(err, posts) {
       if (err) {
         console.log(err);
       } else {
-
-        
         var indices = findIndicesOfMax(posts, 4);
 
         var trendingPosts = [];
 
-        // for (var i = 0; i < indices.length; i++)
-        // console.log(posts[indices[i]]);
         for (var i = 0; i < indices.length; i++) {
           trendingPosts.push(posts[indices[i]]);
         }
         console.log(trendingPosts);
 
-        res.render('../views/forums', { posts: posts, trendingPosts:trendingPosts });//, max:max
+        res.render('../views/forums', {
+          posts: posts,
+          trendingPosts: trendingPosts
+        }); //, max:max
       }
     });
 });
 
 // Forum CREATE POST
-//middleware.isLoggedIn,
-router.post('/', middleware.isLoggedIn, upload.single('image'), async function(req, res) {
+router.post('/', middleware.isLoggedIn, upload.single('image'), async function(
+  req,
+  res
+) {
   cloudinary.uploader.upload(req.file.path, async function(result) {
     // getting the cloudinary url for the image to the motocycle object under image property
     req.body.image = result.secure_url;
     // add image's public_id to motocycle object
     req.body.imageId = result.public_id;
 
-   
-      var newForumPost = new ForumPost({
-        image: req.body.image,
-        imageId: req.body.imageId,
-        title: req.body.title,
-        content: req.body.content,
-        author: {
-          id: req.user._id,
-          username: req.user.username
-        }
-      });
-      ForumPost.create(newForumPost, (err, post) => {
-        if (err) {
-          req.flash('error', 'Something went wrong!');
-          console.log(err);
-        } else {
-          post.save();
-          res.redirect('/forums');
-        }
-      });
+    var newForumPost = new ForumPost({
+      image: req.body.image,
+      imageId: req.body.imageId,
+      title: req.body.title,
+      content: req.body.content,
+      author: {
+        id: req.user._id,
+        username: req.user.username
+      }
+    });
+    ForumPost.create(newForumPost, (err, post) => {
+      if (err) {
+        req.flash('error', 'Something went wrong!');
+        console.log(err);
+      } else {
+        post.save();
+        res.redirect('/forums');
+      }
     });
   });
+});
 
 // Forum CREATE GET
 router.get('/new', (req, res) => {
   // res.render('../views/forums/new');
   res.render('../views/forums/new');
 });
-
 
 router.get('/:id/response', (req, res) => {
   // console.log('it hit the route...');
@@ -122,8 +105,20 @@ router.get('/:id', (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        // console.log(post._id);
-        res.render('../views/forums/show', { post: post });
+        ForumPost.find((err, posts) => {
+          if (err) {
+            console.log(err);
+          } else {
+            var indices = findIndicesOfMax(posts, 4);
+
+            var trendingPosts = [];
+
+            for (var i = 0; i < indices.length; i++) {
+              trendingPosts.push(posts[indices[i]]);
+            }
+            res.render('../views/forums/show', { post: post, trendingPosts });
+          }
+        });
       }
     });
 });
@@ -156,7 +151,7 @@ router.post('/:id/forumresponse', (req, res) => {
           forumresponse.save();
           post.forumresponse.push(forumresponse);
           post.save();
-          req.flash('success', 'Successfully replied');
+          req.flash('success', 'Successfully responded!');
           res.redirect('/forums/' + post._id);
         }
       });

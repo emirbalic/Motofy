@@ -95,6 +95,28 @@
              
          
         </div>
+        <!-- and this will be in partials -->
+        <div class="col-md-4 col-sm-4 pull-right">
+
+                <div class="title">
+                    <p> The post popular posts</p>
+                </div>
+                <div class="row trending">
+                                <%trendingPosts.forEach(post => { %>
+                                    <ul class="list-unstyled ul-trending">
+                                        <li class="media trendinglist">
+                                            <div class="media-body">
+                                                <h5 class="mt-0 mb-1">
+                                                    <a class="userlink" href="/forums/<%=post._id%>">
+                                                        Post title: <%=post.title%>
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                <% })%>
+                        </div>
+                </div>
     </div>
 </div>
 <% include ../partials/footer %>
