@@ -29,6 +29,12 @@ header.jumbotron {
   background-image: url('https://images.unsplash.com/photo-1491591265187-110a92898729?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3718eb205b3c61ae0cda7ec35941de16&auto=format&fit=crop&w=1500&q=80');
 } */
 
+
+/* MOTORCYCLES */
+
+.motopic {
+  max-height: 200px;
+}
 .thumbnail img {
   width: 100%;
   /* background-size: cover;
@@ -85,6 +91,56 @@ header.jumbotron {
   margin-bottom: 0;
 }
 
+/* USERS */
+
+.users {
+  margin: 30px auto;
+}
+
+.btn-follow {
+  color: wheat;
+  background: transparent;
+  border: 1px solid wheat;
+}
+
+.btn-follow:hover{
+  color: rgba(241, 162, 43, 0.904); 
+  
+}
+
+.avatarpic {
+  margin: 20px;
+}
+
+
+.userinfo {
+  border: 1px solid wheat;
+  margin: 20px;
+  padding: 10px 15px;
+  color: wheat;
+}
+
+.userinfo li {
+  text-decoration: none;
+  list-style: none;
+  padding: 5px;
+    margin: 5px;
+}
+
+.userinfo a {
+  color: rgba(241, 162, 43, 0.904)
+}
+.caption a {
+  color: rgba(241, 162, 43, 0.904)
+}
+.userinfo h2 {
+  text-align: center;
+}
+
+.userinfo img {
+  max-width: 100px;
+}
+
 /* EVENTS STYLING */
 
 .eventlist {
@@ -133,6 +189,11 @@ header.jumbotron {
 .userpic {
   background: rgba(241, 162, 43, 0.904);
 }
+
+.userpic a {
+  color: wheat
+}
+
 .forumpic {
   border: 1px solid wheat;
   width: 100%;

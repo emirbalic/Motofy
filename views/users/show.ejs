@@ -5,29 +5,50 @@
 
     <div class="row">
       <div class="col-md-4">
-        <div class="thumbnail">
+        <div class="thumbnail avatarpic">
           <h1><%= user.firstname + " " + user.lastname%></h1>
           <img src="<%= user.avatar %>" alt="Profile picture" />
         </div>
         <div class="caption pull-right">
 
-
-          <% if( (currentUser && !sameUser && !followsAlready) ) {%>
-              <a href="/follow/<%= user.id %>"><button class="btn btn-primary">Follow <%= user.username %></button></a>
-              </p>
-              Send an email to
-              <a href="mailto:<%= user.email%>">
-                <%= user.username%></a>
-               
-                <% } else if( (currentUser && !sameUser && followsAlready) ) {%>
-                <a href="/follow/<%= user.id %>"><button class="btn btn-primary">Unfollow <%= user.username %></button></a>
-              </p>
-                <% }%>
-                <%= sameUser%>
-        </div>
+           
+              <% if( (currentUser && !sameUser && !followsAlready) ) {%>
+                  <a href="/follow/<%= user.id %>"><button class="btn btn-follow">Follow <%= user.username %></button></a>
+                  </p>
+                  Send an email to
+                  <a href="mailto:<%= user.email%>">
+                    <%= user.username%></a>
+                  
+                    <% } else if( (currentUser && !sameUser && followsAlready) ) {%>
+                    <a href="/follow/<%= user.id %>"><button class="btn btn-follow">Unfollow <%= user.username %></button></a>
+                  </p>
+                    <% }%>
+                
+                  
+                <div class="row userinfo">       
+                <!-- user section  -->
+                    <h5>
+                            <em>First name: </em><%=user.firstname%>
+                    </h5>
+                  
+                    <h5>
+                            <em>Last name: </em><%=user.lastname%>
+                    </h5>
+                   
+                    <h5>
+                        <em>Member since: </em><%=moment(user.dateOfRegistration).format( 'MMM-DD-YYYY')%>
+                    </h5>
+                    <h5>
+                        <em>Date of birth: </em><%=moment(user.dob).format('MMM-DD-YYYY')%>
+                    </h5>
+                    <h5><em>City: </em><%=user.city%></h5> 
+                    <h5><em>Country: </em><%=user.country%> </h5>
+                    <h5><em><%=user.followers.length%> members follow  <%= user.username%></em></h5>
+                  </div>
+              </div>
       </div>
       <div class="col-md-8">
-          <div class="row">
+          <div class="row userinfo">
               <p>
                 <em>
                   <h3>
@@ -40,11 +61,14 @@
               </article>
           </div>
         <hr>
-        <div class="row">
+        <div class="row userinfo">
             <h2><%= user.username%>'s images: </h2>
           <ul>
             <% motocycles.forEach((motocycle) => { %>
             <li>
+                
+
+              <span><img src="<%=motocycle.image%>" alt="image"></span>
                 <a href="/motocycles/<%= motocycle.id %>">
                     <%= motocycle.name %>, year <%= motocycle.year %>, made by <%= motocycle.brand %>
             </li>

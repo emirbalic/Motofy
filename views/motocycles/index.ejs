@@ -31,19 +31,20 @@
       
       <% motocycles.forEach(motocycle => { %>
       <div class="col-md-3 col-sm-6">
-        <div class="thumbnail">
+        <div class="thumbnail ">
           <a href="/motocycles/<%=motocycle._id%>">
-            <img src="<%=motocycle.image%>" alt="photo" />
+            <img src="<%=motocycle.image%>" alt="photo" class=""/>
           </a>
           <div class="caption userpic">
             <h4><%=motocycle.name%></h4>
             <h5><strong><%=motocycle.brand%></strong></h5>
-            <p>
+            <!-- <p>
               <a href="/motocycles/<%=motocycle._id%>" class="btn btn-primary"
                 >More Info</a
               >
-            </p>
-            <h5><em><%=motocycle.description%></em></h5>
+            </p> -->
+            <h5><%=motocycle.description.substring(0, 200)%><em><%=motocycle.description.substring(200, 220)%><a href="/motocycles/<%=motocycle._id%>"> read more...</a></em></h5>
+              <!-- <a href="/motocycles/<%=motocycle._id%>">read more...</a> -->
           </div>
         </div>
       </div>
