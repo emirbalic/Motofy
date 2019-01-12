@@ -12,7 +12,7 @@
   <div class="row">
     <h1 style="text-align:center">Motofy Yourself</h1>
     <div style="width: 30%; margin: 40px  auto">
-      <form action="/register" method="POST">
+      <form action="/register" method="POST" enctype="multipart/form-data">
         <div class="form-group">
           <input
             class="form-control"
@@ -122,11 +122,14 @@
           </button>
         </div>
         <a href="/motocycles">Back</a>
+        <!-- hidden property for image upload -->
         <input
         class="form-control"
         type="file"
+        id="avatar"
         name="avatar"
         accept="image/*"
+        required
         placeholder="Profile pic"
         style="visibility:hidden"
       />

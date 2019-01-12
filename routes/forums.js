@@ -2,22 +2,16 @@ var express = require('express');
 var router = express.Router({ mergeParams: true });
 var ForumPost = require('../models/forumpost');
 var Forumresponse = require('../models/forumresponse');
-var mongoose = require('mongoose');
+var middleware = require('../middleware/');
+
+var upload = require('../util/upload');
+var cloudinary = require('../util/cloudinary');
+
 
 // ================
 // Forumpost Routes
 // ================
 
-// Forum All GET
-// router.get('/', (req, res) => {
-//   ForumPost.find((err, posts) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.render('../views/forums', { posts: posts });
-//     }
-//   });
-// });
 
 router.get('/', (req, res) => {
   ForumPost.find({})
@@ -33,27 +27,35 @@ router.get('/', (req, res) => {
 
 // Forum CREATE POST
 //middleware.isLoggedIn,
-router.post('/', (req, res) => {
-  var newForumPost = new ForumPost({
-    image: req.body.image,
+router.post('/', middleware.isLoggedIn, upload.single('image'), async function(req, res) {
+  cloudinary.uploader.upload(req.file.path, async function(result) {
+    // getting the cloudinary url for the image to the motocycle object under image property
+    req.body.image = result.secure_url;
+    // add image's public_id to motocycle object
+    req.body.imageId = result.public_id;
 
-    title: req.body.title,
-    content: req.body.content,
-    author: {
-      id: req.user._id,
-      username: req.user.username
-    }
+   
+      var newForumPost = new ForumPost({
+        image: req.body.image,
+        imageId: req.body.imageId,
+        title: req.body.title,
+        content: req.body.content,
+        author: {
+          id: req.user._id,
+          username: req.user.username
+        }
+      });
+      ForumPost.create(newForumPost, (err, post) => {
+        if (err) {
+          req.flash('error', 'Something went wrong!');
+          console.log(err);
+        } else {
+          post.save();
+          res.redirect('/forums');
+        }
+      });
+    });
   });
-  ForumPost.create(newForumPost, (err, post) => {
-    if (err) {
-      req.flash('error', 'Something went wrong!');
-      console.log(err);
-    } else {
-      post.save();
-      res.redirect('/forums');
-    }
-  });
-});
 
 // Forum CREATE GET
 router.get('/new', (req, res) => {
@@ -61,20 +63,9 @@ router.get('/new', (req, res) => {
   res.render('../views/forums/new');
 });
 
-// Forum Find One
-// router.get('/:id', (req, res) => {
-//   ForumPost.findById(req.params.id, (err, post) => {
-//     if(err) {
-//       console.log(err);
-//     } else {
-//       console.log(post._id);
-//       res.render('../views/forums/show', {post:post});
-//     }
-// });
-// });
 
 router.get('/:id/response', (req, res) => {
-  console.log('it hit the route...');
+  // console.log('it hit the route...');
   ForumPost.findById(req.params.id, (err, post) => {
     if (err) {
       console.log(err);
@@ -96,28 +87,6 @@ router.get('/:id', (req, res) => {
       }
     });
 });
-// example
-// router.get('/:id', (req, res) => {
-//   //find the moto with the id and associate with comments
-//   Motocycle.findById(req.params.id)
-//     .populate({
-//       path: 'comments',
-//       // model: 'Comment',
-//       //this is to get a replies on the page
-//       populate: {
-//         path: 'replies'
-//         // model: 'Reply'
-//       }
-//     })
-//     .exec((err, motocycle) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         // show the moto
-//         res.render('motocycles/show', { motocycle: motocycle });
-//       }
-//     });
-// });
 
 // ================
 // Forumresponse Routes

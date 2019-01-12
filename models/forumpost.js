@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var forumpostSchema = new mongoose.Schema({
     image: String,
+    imageId: String,
     title: String,
     content: String,
     created: {

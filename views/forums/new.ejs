@@ -2,20 +2,22 @@
 
 <div class="container">
   <div class="row">
-      <!-- enctype = allows fileupload feature -->
+    <!-- enctype = allows fileupload feature -->
     <h1 style="text-align:center">Create a new forum post!</h1>
     <div style="width: 30%; margin: 40px  auto">
-            <!-- enctype="multipart/form-data"  prop of the label - accept="image/*"-->
-      <form action="/forums" method="POST"> 
-        
+      <!-- enctype="multipart/form-data"  prop of the label - accept="image/*"-->
+      <form action="/forums" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-            <input
-                class="form-control"
-                type="text"
-                name="image"
-                placeholder="Image"
-            />
-              </div>
+          <input
+            class="form-control"
+            type="file"
+            name="image"
+            id="image"
+            accept="image/*"
+            required
+            placeholder="Image"
+          />
+        </div>
         <div class="form-group">
           <input
             class="form-control"
@@ -24,9 +26,9 @@
             required
             placeholder="Title"
           />
-        </div>   
+        </div>
         <div class="form-group">
-            <textarea
+          <textarea
             maxlength="600"
             class="input form-control"
             class="form-control"
@@ -34,16 +36,14 @@
             required
             name="content"
             placeholder="Post content goes here"
-          ></textarea> 
+          ></textarea>
         </div>
         <div class="form-group">
-          <button
-            class="btn btn-lg btn-default btn-block"
-            type="submit">
+          <button class="btn btn-lg btn-default btn-block" type="submit">
             Submit
           </button>
         </div>
-      </form> 
+      </form>
       <a href="/forums">Back</a>
     </div>
   </div>

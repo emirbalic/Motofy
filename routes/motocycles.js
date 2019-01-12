@@ -5,34 +5,11 @@ var User = require('../models/user');
 var Notification = require("../models/notification");
 
 var middleware = require('../middleware/');
-//request
 
+//image upload to cloudinary
+var upload = require('../util/upload');
+var cloudinary = require('../util/cloudinary');
 
-var multer = require('multer');
-var storage = multer.diskStorage({
-  filename: function(req, file, callback) {
-    callback(null, Date.now() + file.originalname);
-  }
-});
-var imageFilter = function(req, file, cb) {
-  // accept image files only
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
-    return cb(new Error('Only image files are allowed!'), false);
-  }
-  cb(null, true);
-};
-var upload = multer({ storage: storage, fileFilter: imageFilter });
-
-var cloudinary = require('cloudinary');
-
-cloudinary.config({
-
-  // cloud_name: 'motofy',
-  // api_key: process.env.CLOUDINARY_API_KEY,
-  // api_secret: process.env.CLOUDINARY_API_SECRET
-
-  
-});
 
 // INDEX - show all motocycles
 router.get('/', (req, res) => {
@@ -97,6 +74,8 @@ router.get('/', (req, res) => {
 // CREATE - add new motorcycle to database
 router.post('/', middleware.isLoggedIn, upload.single('image'), async function(req, res) {
   //console.log(cloudinary.config);//file. req.file
+  // console.log(req.file.path);
+
   cloudinary.uploader.upload(req.file.path, async function(result) {
     // getting the cloudinary url for the image to the motocycle object under image property
     req.body.motocycle.image = result.secure_url;

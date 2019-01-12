@@ -23,6 +23,7 @@ var eventSchema = new mongoose.Schema ({
     country: String,
     description: String,
     image: String,
+    imageId: String,
     entranceFee: Number,
     author: {
     id: {
