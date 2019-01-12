@@ -94,6 +94,6 @@ app.use('/motocycles', motocycleRoutes);
 app.use('/events', eventRoutes);
 app.use('/forums', forumRoutes);
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('Il server è in ascolto');
 });
