@@ -22,7 +22,7 @@ header.jumbotron {
 
 .trans {
   background: transparent;
-  color: rgba(241, 162, 43, 0.904)
+  color: rgba(241, 162, 43, 0.904);
 }
 /* .bg {
   
@@ -54,8 +54,8 @@ header.jumbotron {
 }
 
 .navbar-header,
-.navbar-collapse, 
-.navbar-brand, 
+.navbar-collapse,
+.navbar-brand,
 .navbar-toggle,
 .sr-only,
 .container-fluid {
@@ -64,7 +64,7 @@ header.jumbotron {
 
 /* not working!! */
 .activeItem {
-  background-color:#ff00a540;
+  background-color: #ff00a540;
 }
 
 .btn-black {
@@ -73,7 +73,7 @@ header.jumbotron {
 }
 
 .btn-black:hover {
-  color:white;
+  color: white;
 }
 
 /* .alert-danger,
@@ -84,7 +84,6 @@ header.jumbotron {
 .alert {
   margin-bottom: 0;
 }
-
 
 /* EVENTS STYLING */
 
@@ -107,13 +106,13 @@ header.jumbotron {
   margin-left: 36px;
 }
 .btn-event:hover {
-  color:greenyellow;
+  color: greenyellow;
   /* color:aquamarine; */
 }
 /* a.btn {
   margin-top: 30px;
 } */
-.col-md-1 p{
+.col-md-1 p {
   margin-top: 20px;
   color: wheat;
 }
@@ -123,14 +122,12 @@ header.jumbotron {
   color: gray;
   text-decoration: none;
 }
-.userlink:hover { 
-  color:rgba(241, 162, 43, 0.904); 
+.userlink:hover {
+  color: rgba(241, 162, 43, 0.904);
   text-decoration: none;
 }
 
-
 /* FORUM STYLING */
-
 
 /* USERS  */
 .userpic {
@@ -143,12 +140,17 @@ header.jumbotron {
   padding-bottom: 40px;
   margin-top: 20px;
 }
+.forumImage {
+  width: 60px;
+  margin: 15px 10px;
+}
+}
 
 #collapseComment .well {
   background: antiquewhite;
 }
 
-.forum-well{
+.forum-well {
   background: wheat;
 }
 
@@ -173,7 +175,6 @@ header.jumbotron {
   text-anchor: middle;
   color: wheat;
   text-orientation: sideways;
-  
 }
 
 .forumpost h3 {
@@ -184,6 +185,12 @@ header.jumbotron {
   font-weight: 600;
   font-size: medium;
   margin: 5px auto 5px 10px;
+}
+
+.trending {
+  border: 1px solid wheat;
+  margin: 20px auto;
+  padding: 10px 10px;
 }
 /* FORUM  */
 

@@ -11,13 +11,19 @@
                                 <% }%>
                     </div>
                     <br>
+
+                    <!-- left -->
                     <%posts.forEach(post => { %>
                         <ul class="list-unstyled ul-Events">
                             <li class="media eventlist">
+                                <% if(post.image) { %>
+                                <img src="<%=post.image%>" class="mr-3 forumImage pull-left" alt="image">
+                                <% }%>
                                 <div class="media-body">
                                     <h5 class="mt-0 mb-1">
                                         <a class="userlink" href="/forums/<%=post._id%>">
-                                            Post title: <%=post.title%>
+                                            Post title: <%=post.title%> - it has been 
+                                            <%=post.forumresponse.length%> times responded to
                                         </a>
                                     </h5>
                                 </div>
@@ -28,8 +34,25 @@
             </div>
             <!-- and this will be in partials -->
             <div class="col-md-4 col-sm-4 pull-right">
-                <div class="container">
 
+                <div class="title">
+                    <p> The post popular posts</p>
+                </div>
+                <div class="row trending">
+                                <%trendingPosts.forEach(post => { %>
+                                    <ul class="list-unstyled ul-trending">
+                                        <li class="media trendinglist">
+                                            <div class="media-body">
+                                                <h5 class="mt-0 mb-1">
+                                                    <a class="userlink" href="/forums/<%=post._id%>">
+                                                        Post title: <%=post.title%>
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                <% })%>
+                        </div>
                 </div>
             </div>
     </div>

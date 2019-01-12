@@ -11,16 +11,56 @@ var cloudinary = require('../util/cloudinary');
 // ================
 // Forumpost Routes
 // ================
+// function indexOfMax(arr) {
+//   if (arr.length === 0) {
+//       return -1;
+//   }
 
+//   var max = arr[0];
+//   var maxIndex = 0;
 
+//   for (var i = 1; i < arr.length; i++) {
+//       if (arr[i] > max) {
+//           maxIndex = i;
+//           max = arr[i];
+//       }
+//   }
+//   return maxIndex;
+// }
+
+function findIndicesOfMax(inp, count) {
+  var outp = [];
+  for (var i = 0; i < inp.length; i++) {
+      outp.push(i); // add index to output array
+      if (outp.length > count) {
+          outp.sort(function(a, b) { return inp[b].forumresponse.length - inp[a].forumresponse.length; }); // descending sort the output array
+          outp.pop(); // remove the last index (index of smallest element in output array)
+      }
+  }
+  return outp;
+}
 router.get('/', (req, res) => {
+  
   ForumPost.find({})
     .sort({ 'created': 'desc' })
     .exec( function(err, posts) {
       if (err) {
         console.log(err);
       } else {
-        res.render('../views/forums', { posts: posts });
+
+        
+        var indices = findIndicesOfMax(posts, 4);
+
+        var trendingPosts = [];
+
+        // for (var i = 0; i < indices.length; i++)
+        // console.log(posts[indices[i]]);
+        for (var i = 0; i < indices.length; i++) {
+          trendingPosts.push(posts[indices[i]]);
+        }
+        console.log(trendingPosts);
+
+        res.render('../views/forums', { posts: posts, trendingPosts:trendingPosts });//, max:max
       }
     });
 });
