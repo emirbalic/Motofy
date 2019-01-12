@@ -21,14 +21,14 @@ var commentRoutes = require('./routes/comments'),
   forumRoutes = require('./routes/forums');
   eventRoutes = require('./routes/events');
 
+const MONGODB_URI =   'mongodb://bakke:bakke2000@ds161653.mlab.com:61653/motofy';
+// mongoose.connect(
+//   'mongodb://bakke:bakke2000@ds161653.mlab.com:61653/motofy',
 
-mongoose.connect(
-  'mongodb://bakke:bakke2000@ds161653.mlab.com:61653/motofy',
+//   // 'MONGODB_PASSWORD',
 
-  // 'MONGODB_PASSWORD',
-
-  { useNewUrlParser: true }
-);
+//   { useNewUrlParser: true }
+// );
 //this line is here only to get rid of 
 // node:8605) DeprecationWarning: collection.ensureIndex is deprecated. Use createIndexes instead.
 mongoose.set('useCreateIndex', true);
@@ -94,6 +94,15 @@ app.use('/motocycles', motocycleRoutes);
 app.use('/events', eventRoutes);
 app.use('/forums', forumRoutes);
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('Il server è in ascolto');
-});
+// app.listen( process.env.PORT || 3000, () => {
+//   console.log('Il server è in ascolto');
+// });
+
+mongoose
+  .connect(MONGODB_URI)
+  .then(result => {
+    app.listen(process.env.PORT ||3000);
+  })
+  .catch(err => {
+    console.log(err);
+  });
