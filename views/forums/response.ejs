@@ -5,7 +5,7 @@
   <div class="row">
     <h1 style="text-align:center">Create a new forum post!</h1>
     <div style="width: 30%; margin: 40px  auto">
-      <form action="/forums/'5c32112fe9492f5512c92ee4'/forumresponse" method="POST">       
+      <form action="/forums/<%=post._id%>/forumresponse" method="POST">       
         <div class="form-group">
             <textarea
             maxlength="400"
@@ -13,7 +13,7 @@
             class="form-control"
             type="text"
             required
-            name="response"
+            name="content"
             placeholder="Respond to this post"
           ></textarea> 
         </div>

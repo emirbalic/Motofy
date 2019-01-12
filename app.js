@@ -23,7 +23,6 @@ var commentRoutes = require('./routes/comments'),
 
 
 mongoose.connect(
-  'mongodb://bakke:bakke2000@ds161653.mlab.com:61653/motofy',
 
   // 'MONGODB_PASSWORD',
 

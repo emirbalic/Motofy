@@ -23,12 +23,12 @@
         </div>
 
         <div class="form-group">
-          <input
+            <input
             class="form-control"
-            type="text"
-            name="avatar"
-            placeholder="Profile pic"
+            onclick=avatar.click();
+            placeholder='Image'
           />
+         
         </div>
 
         <div class="form-group">
@@ -121,8 +121,17 @@
             Sign Up
           </button>
         </div>
+        <a href="/motocycles">Back</a>
+        <input
+        class="form-control"
+        type="file"
+        name="avatar"
+        accept="image/*"
+        placeholder="Profile pic"
+        style="visibility:hidden"
+      />
       </form>
-      <a href="/motocycles">Back</a>
+      
     </div>
   </div>
 </div>

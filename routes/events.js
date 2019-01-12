@@ -10,30 +10,43 @@ var middleware = require('../middleware/');
 // ================
 
 // Event All
+// router.get('/', (req, res) => {
+//   // var currentUserId = req.user ? req.user._id : null;
+//   Event.find((err, events) => {
+//     if(err) {
+//       console.log(err);
+//     } else {
+//       // events.forEach((event) => {
+//       //   console.log(event.author.username);
+//       //   // if(event.attending) {
+//       //   //   for (i = 0; i < event.attending.length; i++) {
+//       //   //     console.log(event.attending);
+//       //   //   }
+//       //       // if(event.attending.equals(currentUserId)) 
+//       //       // {
+//       //       //   console.log(event.attending);
+//       //       //   console.log("BBINNNNNNGOOOOOOOOOOOOO");
+//       //       // }
+//       //     //}
+//       //   })
+//       // console.log('=================='+ currentUserId);
+//       res.render('../views/events', {events: events});
+//     }
+//   })
+// });
+
 router.get('/', (req, res) => {
-  // var currentUserId = req.user ? req.user._id : null;
-  Event.find((err, events) => {
-    if(err) {
-      console.log(err);
-    } else {
-      // events.forEach((event) => {
-      //   console.log(event.author.username);
-      //   // if(event.attending) {
-      //   //   for (i = 0; i < event.attending.length; i++) {
-      //   //     console.log(event.attending);
-      //   //   }
-      //       // if(event.attending.equals(currentUserId)) 
-      //       // {
-      //       //   console.log(event.attending);
-      //       //   console.log("BBINNNNNNGOOOOOOOOOOOOO");
-      //       // }
-      //     //}
-      //   })
-      // console.log('=================='+ currentUserId);
-      res.render('../views/events', {events: events});
-    }
-  })
+  Event.find({})
+    .sort({ 'created': 'desc' })
+    .exec( function(err, events) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render('../views/events', { events: events });
+      }
+    });
 });
+
 
 // Event New
 router.get('/new', (req, res) => {

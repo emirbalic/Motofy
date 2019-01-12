@@ -23,15 +23,13 @@
           />
         </div>
         <div class="form-group">
-          <label for="image"> Image </label>
+          <!-- <label for="image"> Image </label> -->
           <input
             class="form-control"
-            type="file"
-            id="image"
-            name="image"
-            accept="image/*"
-            required
+            onclick=image.click();
+            placeholder='Image'
           />
+          
         </div>
         <div class="form-group">
           <input
@@ -69,10 +67,22 @@
             Submit
           </button>
         </div>
+        <a href="/motocycles">Back</a>
+        <input
+            class="form-control"
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            required
+            style="visibility:hidden"
+          />
       </form>
-      <a href="/motocycles">Back</a>
+      
     </div>
   </div>
 </div>
+
+
 
 <% include ../partials/footer %>

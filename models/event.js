@@ -1,7 +1,16 @@
 var mongoose = require('mongoose');
 
 var eventSchema = new mongoose.Schema ({
+
     eventname: String,
+    created: {
+        type: Date,
+        default: Date.now
+    },
+    edited: {
+        type: Date,
+        default: Date.now
+    },
     date: Date,
     // will got back to date with possibility to measure time before the event
     // so far will have strings for simplicity

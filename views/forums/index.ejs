@@ -22,7 +22,7 @@
                                     </h5>
                                 </div>
                             </li>
-                            <h4>Created at <%=moment(post.date).format( 'MMM-DD-YYYY')%></h4>                       
+                            <h4>Created on <%=moment(post.created).format( 'MMM-DD-YYYY')%> at <%=moment(post.created).format('LT')%></h4>                       
                         </ul>
                     <% })%>
             </div>

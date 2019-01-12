@@ -1,30 +1,92 @@
 <% include ../partials/header %>
-<h1>Welcome to forum discussions!!!!</h1>
 <div class="container">
     <div class="row">
         <% if(currentUser) { %>
 
-            <div class="col-md-8 col-sm-8 pull-left">
+            <div class="col-lg-8 col-md-8 col-sm-8 pull-left">
                 <%if(post.image) {%>
                     <div class="caption">
                         <img class="forumpic" src="<%=post.image%>" alt="image">
                     </div>
                 <% } %>
-                <p>
-                    <h1><strong><%=post.title%></strong></h1>
-                </p>
-                <p>
-                <h1><strong>DUZINA<%=post.forumresponse._id%></strong></h1>
-                </p>
-                <p>
-                    <h3><em><%=post.content%></em></h3>
-                </p>
-                <%if(post.forumresponse && post.forumresponse.lenght){%>
+                <div class="forum-title container-fluid">
+
+                    <p>
+                        <h1><strong><%=post.title%></strong></h1>
+                    </p>
+                    <hr>
+                </div>
+               
+                <article class="forumpost">
+                    <p>
+                        <h3><%=post.content%></h3>
+                    </p>
+                </article>
+                <div class="well forum-well">
+        
+                    <!--Setting up the add new comment button that is used for collapsing-->
+                <div class="text-right">
+
+                    <a class="btn btn-Forum pull-right" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New comment</a>
+                    </div>
+        
+                  <!--Comment section title-->
+                  <h4><strong>Comments <span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"></span></strong></h4>
+        
+                  <!--Collapse Add a comment form START-->
+        
+
+                <div class="collapse" id="collapseComment">
+                    <div class="well" ">
+                        <!-- <% if(!currentUser) { %> -->
+                      <!--If the user is not logged in, direct him to the login page-->
+                      <!-- <h5>You need to login before you can comment. <a href="/login">Click here</a> to go to the login page.</h5>
+                        <% } %> -->
+                        <!-- <% if(currentUser) { %> -->
+                      <!--If the user is logged in, show the new comment form-->
+                      <h4>Write your response <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span></h4>
+                      <form id="add-comment-form" action="/forums/<%=post._id%>/forumresponse" method="POST">
+                        <div class="form-group">
+                          <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                        </div>
+                        <div class="form-group">
+                          <textarea class="form-control" name="content" placeholder="Write your comment..." form="add-comment-form" rows="5" cols="70"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <button class="btn btn-Forum btn-sm">Respond <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                        </div>
+                      </form>
+                        <!-- <% } %> -->
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- <a class="btn btn-primary" href="/forums/<%=post._id%>/response">
+                Add a response
+                </a> -->
+                <%if(post.forumresponse.lenght !== 0){%>
                     <% post.forumresponse.forEach(forumresponse => { %>
                         <ul class="list-unstyled ul-Events">
-                            <li class="media eventlist">
-                                <%= forumresponse.content %>
-                                <%= forumresponse.created %>
+                            <li class="media eventlist forumresponse">
+                                <p>
+                                    <%= forumresponse.content %>
+                                </p>
+                                <%= moment(forumresponse.created).format("YYYY-MM-DDTHH:mm")  %>
+                                <%= forumresponse.author.username %>
                             </li>
                         </ul>
                     <% }) %>         

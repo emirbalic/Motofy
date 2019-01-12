@@ -96,7 +96,7 @@
                 </li>
                 <h5>
                    
-                    <em>Created by: <a class="userlink" href="/users/<%= event.author.id %>"><%=event.author.username %> </a></em>
+                    <em>Created by: <a class="userlink" href="/users/<%= event.author.id %>"><%=event.author.username %> </a> on <%=moment(event.created).format('MMM-DD-YYYY')%> at <%=moment(event.created).format('LT')%></em>
                 </h5>
             </ul>
             <% }) %>       

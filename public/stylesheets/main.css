@@ -138,7 +138,53 @@ header.jumbotron {
 }
 .forumpic {
   border: 1px solid wheat;
-    width: 550px;
-    padding-top: 40px;
-    padding-bottom: 40px;
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: 20px;
 }
+
+#collapseComment .well {
+  background: antiquewhite;
+}
+
+.forum-well{
+  background: wheat;
+}
+
+.btn-Forum {
+  border: 2px solid black;
+  background: rgba(241, 162, 43, 0.904);
+  color: black;
+}
+
+.forum-title {
+  text-align: center;
+  padding: 5px;
+  border: 1px solid black;
+  color: black;
+}
+.forum-title hr {
+  background: black;
+}
+
+.forumpost {
+  border: 1px solid rgb(190, 144, 100);
+  text-anchor: middle;
+  color: wheat;
+  text-orientation: sideways;
+  
+}
+
+.forumpost h3 {
+  padding-left: 15px;
+}
+
+.forumresponse p {
+  font-weight: 600;
+  font-size: medium;
+  margin: 5px auto 5px 10px;
+}
+/* FORUM  */
+
+/* style="border-left: 5px solid #00C851; */
