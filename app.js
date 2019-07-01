@@ -18,7 +18,8 @@ var express = require('express'),
 var commentRoutes = require('./routes/comments'),
   motocycleRoutes = require('./routes/motocycles'),
   indexRoutes = require('./routes/index'),
-  forumRoutes = require('./routes/forums');
+  forumRoutes = require('./routes/forums'),
+  gangRoutes = require('./routes/gangs'),
   eventRoutes = require('./routes/events');
 
 const MONGODB_URI =   'mongodb://bakke:bakke2000@ds161653.mlab.com:61653/motofy';
@@ -93,6 +94,7 @@ app.use('/motocycles/:id/comments', commentRoutes);
 app.use('/motocycles', motocycleRoutes);
 app.use('/events', eventRoutes);
 app.use('/forums', forumRoutes);
+app.use('/gangs', gangRoutes);
 
 // app.listen( process.env.PORT || 3000, () => {
 //   console.log('Il server è in ascolto');

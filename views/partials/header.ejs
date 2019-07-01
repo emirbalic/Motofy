@@ -1,96 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      href=" https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href=" https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous">
     </script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/stylesheets/main.css" />
-    <title>Motofy</title>
-  </head>
-  <body>
-    <!-- navbar -->
-    <!-- <div class="collapse navbar-collapse">
+  <link rel="stylesheet" href="/stylesheets/main.css" />
+  <title>Motofy</title>
+</head>
+
+<body>
+  <!-- navbar -->
+  <!-- <div class="collapse navbar-collapse">
 
     </div> -->
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              
-          <a href="/" class="navbar-brand"> Motofy <i class="fas fa-motorcycle"></i></a>
-          
-        </div>
-        <!-- <div class="navbar-header">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+          data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <a href="/" class="navbar-brand"> Motofy <i class="fas fa-motorcycle"></i></a>
+
+      </div>
+      <!-- <div class="navbar-header">
             <a href="/motocycles" class="navbar-brand">Home</a>
           </div> -->
-          <div class="navbar-header">
-              <% if(error && error.length > 0) { %>
-                <div class="alert alert-danger" role="alert"><%= error %></div>
-                <% } %> <% if(success && success.length > 0) { %>
-                <div class="alert alert-success" role="alert"><%= success %></div>
-                <% } %>
-          </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <!-- if I add class 'navbar-right' instead of 'pull-right' it will collapse horizontally -->
-          <ul class="nav navbar-nav pull-right">
-            <li><a href="/motocycles" class="navbar-brand">Home</a></li>
-            <li><a href="/users" class="navbar-brand">Members</a></li>
-              <li><a href="/events" class="navbar-brand">Events</a></li>
-              <li><a href="/forums" class="navbar-brand">Forum</a></li>
-            <% if(!currentUser) { %>
-            <li><a href="/login" class="navbar-brand">Login</a></li>
-            <li><a href="/register" class="navbar-brand">Sign Up</a></li>
-            <% } else { %>
-              
-
-              <!-- here add a link to profile -->
-            <li class="dropdown">
-
-                <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" 
-                role="button" aria-haspopup="true" aria-expanded="false">Notifications <span class="badge"><%= notifications.length %></span></a>
-                <ul class="dropdown-menu">
-            <li>
-                <a href="/notifications">View past notifications</a>
-            </li>
-                  <% notifications.forEach(function(notification) { %>                          
-                    <li>
-                        <a href="/notifications/<%= notification.id %>">
-                            <%= notification.username %> created a new Motofy
-                        </a>
-                    </li>
-                  <% }); %>
-                </ul>
-
-            </li>
-            <li><a href="/users/<%=currentUser.id%>" class="navbar-brand">Logged as <%= currentUser.username %> </a></li>
-            <li><a href="/logout" class="navbar-brand">Logout</a></li>
-
-            
-
-            <% } %>
-          </ul>
-        </div>
+      <div class="navbar-header">
+        <% if(error && error.length > 0) { %>
+        <div class="alert alert-danger" role="alert"><%= error %></div>
+        <% } %> <% if(success && success.length > 0) { %>
+        <div class="alert alert-success" role="alert"><%= success %></div>
+        <% } %>
       </div>
-    </nav>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <!-- if I add class 'navbar-right' instead of 'pull-right' it will collapse horizontally -->
+        <ul class="nav navbar-nav pull-right">
+          <li><a href="/motocycles" class="navbar-brand">My Motofy</a></li>
+          <li><a href="/motocycles" class="navbar-brand">Galery</a></li>
+          <li><a href="/users" class="navbar-brand">Brothers and Sisters</a></li>
+          <li><a href="/gangs" class="navbar-brand">Gangs</a></li>
+          <li><a href="/events" class="navbar-brand">Events</a></li>
+          <li><a href="/forums" class="navbar-brand">Forum</a></li>
+          <li><a href="/forums" class="navbar-brand">Service</a></li>
+          <li><a href="/events" class="navbar-brand">Video</a></li>
+          <li><a href="/motocycles" class="navbar-brand">Shop</a></li>
+          <% if(!currentUser) { %>
+          <li><a href="/login" class="navbar-brand">Login</a></li>
+          <li><a href="/register" class="navbar-brand">Sign Up</a></li>
+          <% } else { %>
 
-   
 
+          <!-- here add a link to profile -->
+          <li class="dropdown">
+
+            <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true"
+              aria-expanded="false">Notifications <span class="badge"><%= notifications.length %></span></a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/notifications">View past notifications</a>
+              </li>
+              <% notifications.forEach(function(notification) { %>
+              <li>
+                <a href="/notifications/<%= notification.id %>">
+                  <%= notification.username %> created a new Motofy
+                </a>
+              </li>
+              <% }); %>
+            </ul>
+
+          </li>
+          <li><a href="/users/<%=currentUser.id%>" class="navbar-brand">Logged as <%= currentUser.username %> </a></li>
+          <li><a href="/logout" class="navbar-brand">Logout</a></li>
+
+
+
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </nav>
