@@ -14,9 +14,7 @@
           ... and take a look at some of the best looking bikes in the world
         </p>
         <p>
-          <a class="btn btn-large btn-black" href="motocycles/new"
-            >Add New Moto</a
-          >
+          <a class="btn btn-large btn-black" href="motocycles/new">Add New Moto</a>
         </p>
       </div>
     </header>
@@ -28,12 +26,12 @@
         <h3><%= noMatch %></h3>
         <% } %>
       </div>
-      
+
       <% motocycles.forEach(motocycle => { %>
       <div class="col-md-3 col-sm-6">
         <div class="thumbnail ">
           <a href="/motocycles/<%=motocycle._id%>">
-            <img src="<%=motocycle.image%>" alt="photo" class=""/>
+            <img src="<%=motocycle.image%>" alt="photo" class="" />
           </a>
           <div class="caption userpic">
             <h4><%=motocycle.name%></h4>
@@ -43,8 +41,9 @@
                 >More Info</a
               >
             </p> -->
-            <h5><%=motocycle.description.substring(0, 200)%><em><%=motocycle.description.substring(200, 220)%><a href="/motocycles/<%=motocycle._id%>"> read more...</a></em></h5>
-              <!-- <a href="/motocycles/<%=motocycle._id%>">read more...</a> -->
+            <h5><%=motocycle.description.substring(0, 200)%><em><%=motocycle.description.substring(200, 220)%><a
+                  href="/motocycles/<%=motocycle._id%>"> read more...</a></em></h5>
+            <!-- <a href="/motocycles/<%=motocycle._id%>">read more...</a> -->
           </div>
         </div>
       </div>
@@ -61,44 +60,40 @@
           <a href="/motocycles<%if(search){%>?search=<%=search%><%}%>">First</a>
         </li>
         <% } %> <% if (current == 1) { %>
-        <li class="disabled"><a>«</a></li>
+        <li class=" disabled"><a>«</a></li>
         <% } else { %>
         <li>
-          <a
-            href="/motocycles?page=<%= Number(current) - 1 %><%if(search){%>&search=<%=search%><%}%>"
+          <a href="/motocycles?page=<%= Number(current) - 1 %><%if(search){%>&search=<%=search%><%}%>"
             >«</a
           >
         </li>
         <% } %> <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %> <%
         if (i !== 1) { %>
-        <li class="disabled"><a>...</a></li>
+        <li class=" disabled"><a>...</a></li>
         <% } %> <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %> <%
         if (i == current) { %>
         <li class="active"><a><%= i %></a></li>
         <% } else { %>
         <li>
-          <a
-            href="/motocycles?page=<%= i %><%if(search){%>&search=<%=search%><%}%>"
+          <a href="/motocycles?page=<%= i %><%if(search){%>&search=<%=search%><%}%>"
             ><%= i %></a
           >
         </li>
         <% } %> <% if (i == Number(current) + 4 && i < pages) { %>
-        <li class="disabled"><a>...</a></li>
+        <li class=" disabled"><a>...</a></li>
         <% } %> <% } %> <% if (current == pages) { %>
         <li class="disabled"><a>»</a></li>
         <% } else { %>
         <li>
-          <a
-            href="/motocycles?page=<%= Number(current) + 1 %><%if(search){%>&search=<%=search%><%}%>"
+          <a href="/motocycles?page=<%= Number(current) + 1 %><%if(search){%>&search=<%=search%><%}%>"
             >»</a
           >
         </li>
         <% } %> <% if (current == pages) { %>
-        <li class="disabled"><a>Last</a></li>
+        <li class=" disabled"><a>Last</a></li>
         <% } else { %>
         <li>
-          <a
-            href="/motocycles?page=<%= pages %><%if(search){%>&search=<%=search%><%}%>"
+          <a href="/motocycles?page=<%= pages %><%if(search){%>&search=<%=search%><%}%>"
             >Last</a
           >
         </li>

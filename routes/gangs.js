@@ -8,25 +8,29 @@ var Gang = require('../models/gang');
 
 var middleware = require('../middleware/');
 
+//image upload to cloudinary
+var upload = require('../util/upload');
+var cloudinary = require('../util/cloudinary');
+
 // ================
 // Gangs Routes
 // ================
 
 router.get('/new', middleware.isLoggedIn, (req, res) => {
-    res.render('../views/gangs/new')
-    // res.send('a new gang!');
-    // Motocycle.findById(req.params.id, (err, motocycle) => {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     res.render('comments/new', { motocycle: motocycle });
-    //   }
-    // });
-  });
+  res.render('../views/gangs/new');
+  // res.send('a new gang!');
+  // Motocycle.findById(req.params.id, (err, motocycle) => {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     res.render('comments/new', { motocycle: motocycle });
+  //   }
+  // });
+});
 
 // INDEX - show all motocycles
 router.get('/', (req, res) => {
-//   res.send('here gangs');
+  //   res.send('here gangs');
   res.render('../views/gangs');
   // // for pagination
   // var perPage = 8;
@@ -82,4 +86,48 @@ router.get('/', (req, res) => {
   // }
 });
 
+// CREATE - add new motorcycle to database
+router.post('/', middleware.isLoggedIn, upload.single('image'), async function(
+  req,
+  res
+) {
+  //console.log(cloudinary.config);//file. req.file
+  // console.log(req.file.path);
+
+  cloudinary.uploader.upload(req.file.path, async function(result) {
+    // getting the cloudinary url for the image to the motocycle object under image property
+    req.body.gang.image = result.secure_url;
+    // add image's public_id to motocycle object
+    req.body.gang.imageId = result.public_id;
+    // adding author to motocycle
+    req.body.gang.founder = {
+      id: req.user._id,
+      username: req.user.username
+    };
+
+    var newGang = req.body.gang;
+
+    try {
+      let gang = await Gang.create(newGang);
+    //   let user = await User.findById(req.user._id)
+    //     .populate('followers')
+    //     .exec();
+    //   let newNotification = {
+    //     username: req.user.username,
+    //     motocycleId: motocycle.id
+    //   };
+    //   // console.log(newNotification);
+
+    //   for (const follower of user.followers) {
+    //     let notification = await Notification.create(newNotification);
+    //     follower.notifications.push(notification);
+    //     follower.save();
+    //   }
+       res.redirect(`/gangs/${gang.id}`);
+    } catch (err) {
+      req.flash('error', err.message);
+      res.redirect('back');
+    }
+  });
+});
 module.exports = router;

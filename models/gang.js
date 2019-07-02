@@ -2,14 +2,16 @@ var mongoose = require('mongoose');
 
 var gangSchema = new mongoose.Schema({
   name: String,
+  city: String,
+  description: String,
   coatOfArms: String,
   reputation: Number,
-  owner: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  },
+  //   owner: {
+  //     id: {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: 'User'
+  //     }
+  //   },
   created: {
     type: Date,
     default: Date.now
@@ -18,10 +20,11 @@ var gangSchema = new mongoose.Schema({
     id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-    }
+    },
+    username: String
   },
   members: [
-      {
+    {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }

@@ -1,5 +1,87 @@
 <% include ../partials/header %>
 
-<p> new gang</p>
+<div class="container">
+    <div class="row">
+      <h1 style="text-align:center">Create Your Gang!</h1>
+      <div style="width: 30%; margin: 40px  auto">
+          <!-- enctype = allows fileupload feature -->
+        <form action="/gangs" method="POST" enctype="multipart/form-data"> 
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="gang[name]"
+              placeholder="Name of your Gang"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="gang[city]"
+              placeholder="City of your Gang"
+            />
+          </div>
+          <div class="form-group">
+            <!-- <label for="image"> Image </label> -->
+            <input
+              class="form-control"
+              onclick=image.click();
+              placeholder='Coat of Arms'
+            />
+            
+          </div>
+          <!-- <div class="form-group">
+            <input
+              class="form-control"
+              type="number"
+              name="motocycle[price]"
+              min="1"
+              step="1"
+              placeholder="Price Paid"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="motocycle[year]"
+              placeholder="Year Made"
+            />
+          </div> -->
+          <div class="form-group">
+            <!-- will try here -->
+            <textarea
+              class="input form-control"
+              class="form-control"
+              type="text"
+              name="gang[description]"
+              placeholder="What is your crew all about..."
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <button
+              class="btn btn-lg btn-default btn-block btn-primary"
+              type="submit"
+            >
+              Submit
+            </button>
+          </div>
+          <a href="/gangs">Back</a>
+                  <!-- hidden property for image upload -->
+          <input
+              class="form-control"
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              required
+              style="visibility:hidden"
+            />
+        </form>
+        
+      </div>
+    </div>
+  </div>
 
 <% include ../partials/footer %>
