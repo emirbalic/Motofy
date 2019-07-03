@@ -18,8 +18,16 @@
             <input
               class="form-control"
               type="text"
+              name="gang[country]"
+              placeholder="Country of your gang"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
               name="gang[city]"
-              placeholder="City of your Gang"
+              placeholder="City of your gang"
             />
           </div>
           <div class="form-group">
@@ -31,24 +39,20 @@
             />
             
           </div>
-          <!-- <div class="form-group">
-            <input
-              class="form-control"
-              type="number"
-              name="motocycle[price]"
-              min="1"
-              step="1"
-              placeholder="Price Paid"
-            />
-          </div>
           <div class="form-group">
-            <input
+              <select class="form-control selectpicker" name="gang[status]">
+                  <option value="">Status of the gang</option>
+                  <option value="Open">Open</option>
+                  <option value="Closed">Closed</option>
+                  <option value="Wild">Wild</option>
+                </select>
+            <!-- <input
               class="form-control"
               type="text"
               name="motocycle[year]"
               placeholder="Year Made"
-            />
-          </div> -->
+            /> -->
+          </div>
           <div class="form-group">
             <!-- will try here -->
             <textarea

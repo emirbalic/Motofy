@@ -1,0 +1,36 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="thumbnail">
+                <div class="caption">
+                    <img class="img-responsive" src="<%= gang.coatOfArms %>" alt="Image" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="thumbnail">
+                    <div class="caption text-center">
+                            <h4>INFO</h4>
+                            <h4><%= gang.name %></h4>
+                            <p><%= gang.city %></p>
+                            <p><%= gang.description %></p>
+                            <p>
+                              Founder: 
+                              <a href="/users/<%= gang.founder.id %>"><%= gang.founder.username %></a>
+                              Created:
+                              <%= moment(gang.created).fromNow() %>
+                            </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+<!--COMMENT SECTION END-->
+
+
+
+<% include ../partials/footer %>

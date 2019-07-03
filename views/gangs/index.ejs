@@ -19,9 +19,32 @@
         </p> 
       </div> -->
       <h1>This is gangs</h1>
-      <p>Find people to ride with in your area, join the group of riders or start your own group!</p>
+      <p>Find people to ride with in your area, join the group of riders or start your own group!
+        or, why don't you 
+        <a href="gangs/new">
+          <strong>
+            create your own gang?
+          </strong>
+        </a> 
+      </p>
     </header>
-    
+
+    <% gangs.forEach(gang => { %>
+    <div class="col-md-6 col-sm-12">
+      <div class="thumbnail ">
+        <a href="/gangs/<%=gang._id%>">
+          <img src="<%=gang.coatOfArms%>" alt="photo" class="" />
+        </a>
+        <div class="caption userpic">
+          <h4><%=gang.name%></h4>
+        </div>
+
+      </div>
+    </div>
+    <% }); %>
+
+
+
   </div>
 </div>
 <% include ../partials/footer %>

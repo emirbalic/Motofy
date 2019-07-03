@@ -53,8 +53,7 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <!-- if I add class 'navbar-right' instead of 'pull-right' it will collapse horizontally -->
         <ul class="nav navbar-nav pull-right">
-          <li><a href="/motocycles" class="navbar-brand">My Motofy</a></li>
-          <!-- <li><a href="/motocycles" class="navbar-brand">Galery</a></li> -->
+          <li><a href="/motocycles" class="navbar-brand">Galery</a></li>
           <li><a href="/users" class="navbar-brand">Brothers and Sisters</a></li>
           <li><a href="/gangs" class="navbar-brand">Gangs</a></li>
           <li><a href="/events" class="navbar-brand">Events</a></li>
@@ -63,9 +62,9 @@
           <!-- <li><a href="/events" class="navbar-brand">Video</a></li> -->
           <li><a href="/shop" class="navbar-brand">Shop</a></li>
           <% if(!currentUser) { %>
-          <li><a href="/login" class="navbar-brand">Login</a></li>
-          <li><a href="/register" class="navbar-brand">Sign Up</a></li>
-          <% } else { %>
+            <li><a href="/login" class="navbar-brand">Login</a></li>
+            <li><a href="/register" class="navbar-brand">Sign Up</a></li>
+            <% } else { %>
 
 
           <!-- here add a link to profile -->
@@ -87,7 +86,7 @@
             </ul>
 
           </li>
-          <li><a href="/users/<%=currentUser.id%>" class="navbar-brand">Logged as <%= currentUser.username %> </a></li>
+          <li><a href="/users/<%=currentUser.id%>" class="navbar-brand"><%= currentUser.username %>'s Motofy </a></li>
           <li><a href="/logout" class="navbar-brand">Logout</a></li>
 
 
